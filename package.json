@@ -2,7 +2,7 @@
   "name": "red-flag-scanner",
   "version": "0.1.0",
   "private": true,
-  "description": "Recon Red-Flag Scanner \— a deterministic, browser-only checklist that ranks red flags in a landlord's operating-expense reconciliation. No AI in the arithmetic; no data leaves the browser.",
+  "description": "Recon Red-Flag Scanner — a deterministic, browser-only checklist that ranks red flags in a landlord's operating-expense reconciliation. No AI in the arithmetic; no data leaves the browser.",
   "type": "module",
   "scripts": {
     "dev": "vite",
