@@ -1,0 +1,210 @@
+{
+  "meta": {
+    "package_id": "MW-C",
+    "property_name": "Maplewood Commerce Center",
+    "tenant_name": "Copperline Outfitters",
+    "premises_sf": 30000,
+    "currency": "USD",
+    "schema_version": "1.0",
+    "story": "The capital year. Occupancy falls from 98% to 82%: a $148,500 parking-lot job expensed as repairs, insurance grossed up, a denominator that shrinks with vacancy, and a balance that doesn't add."
+  },
+  "lease_lite": {
+    "share": {
+      "stated_pct": 17.86,
+      "numerator_sf": 30000,
+      "denominator_basis": "GLA"
+    },
+    "fees": [],
+    "capital_threshold": 10000,
+    "capital_life_years": 10,
+    "gross_up": {
+      "allowed": true,
+      "to_pct": 95
+    }
+  },
+  "years": [
+    {
+      "year": 2021,
+      "occupancy_pct": 98,
+      "denominator_sf": 168000,
+      "gross_up_applied": false,
+      "lines": [
+        {
+          "label": "Landscaping & grounds",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 13846.2,
+          "tenant_amount": 2472.53
+        },
+        {
+          "label": "Repairs & maintenance",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 19774.55,
+          "tenant_amount": 3531.16
+        },
+        {
+          "label": "Sweeping & striping",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 6104.3,
+          "tenant_amount": 1090.05
+        },
+        {
+          "label": "Security",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 16420.75,
+          "tenant_amount": 2932.27
+        },
+        {
+          "label": "Trash removal",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 6640.88,
+          "tenant_amount": 1185.87
+        },
+        {
+          "label": "Pest control",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 2042.6,
+          "tenant_amount": 364.75
+        },
+        {
+          "label": "Janitorial – common areas",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 9864,
+          "tenant_amount": 1761.42
+        },
+        {
+          "label": "Common area lighting – electricity",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 10050.2,
+          "tenant_amount": 1794.67
+        },
+        {
+          "label": "Real estate taxes",
+          "section": "Taxes",
+          "bucket": "non_controllable",
+          "amount": 97412.5,
+          "tenant_amount": 17395.05
+        },
+        {
+          "label": "Insurance",
+          "section": "Insurance",
+          "bucket": "non_controllable",
+          "amount": 42980.6,
+          "tenant_amount": 7675.09
+        }
+      ],
+      "tenant_summary": {
+        "pro_rata_share_pct": 17.8571,
+        "tenant_total": 40202.86,
+        "estimates_paid": 43200,
+        "balance_due": -2997.14
+      }
+    },
+    {
+      "year": 2022,
+      "occupancy_pct": 82,
+      "denominator_sf": 137760,
+      "gross_up_applied": true,
+      "lines": [
+        {
+          "label": "Landscaping & grounds",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 14000,
+          "tenant_amount": 3048.78
+        },
+        {
+          "label": "Repairs & maintenance",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 20418.92,
+          "tenant_amount": 4446.63
+        },
+        {
+          "label": "Sweeping & striping",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 6318.95,
+          "tenant_amount": 1376.08
+        },
+        {
+          "label": "Security",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 16980.1,
+          "tenant_amount": 3697.76
+        },
+        {
+          "label": "Trash removal",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 6889.4,
+          "tenant_amount": 1500.3
+        },
+        {
+          "label": "Pest control",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 2112.75,
+          "tenant_amount": 460.09
+        },
+        {
+          "label": "Janitorial – common areas",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 9864,
+          "tenant_amount": 2148.08
+        },
+        {
+          "label": "Parking Lot R&M",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 148500,
+          "tenant_amount": 32338.85
+        },
+        {
+          "label": "Common area lighting – electricity",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 12063.38,
+          "gross_up": {
+            "actual": 10412.6,
+            "factor": 1.1585
+          },
+          "tenant_amount": 2627.04
+        },
+        {
+          "label": "Real estate taxes",
+          "section": "Taxes",
+          "bucket": "non_controllable",
+          "amount": 101218.36,
+          "tenant_amount": 22042.32
+        },
+        {
+          "label": "Insurance",
+          "section": "Insurance",
+          "bucket": "non_controllable",
+          "amount": 52282.9,
+          "gross_up": {
+            "actual": 45128.4,
+            "factor": 1.1585
+          },
+          "tenant_amount": 11385.65
+        }
+      ],
+      "tenant_summary": {
+        "pro_rata_share_pct": 21.777,
+        "tenant_total": 85071.58,
+        "estimates_paid": 44400,
+        "balance_due": 41283.98
+      }
+    }
+  ]
+}

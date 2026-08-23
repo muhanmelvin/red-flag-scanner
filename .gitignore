@@ -1,0 +1,9 @@
+node_modules/
+dist/
+dist-single/
+*.tsbuildinfo
+.DS_Store
+
+# Client-data gate: the private deny-list is injected locally or via CI secret,
+# never committed. See gates/README.md.
+gates/denylist.local.json

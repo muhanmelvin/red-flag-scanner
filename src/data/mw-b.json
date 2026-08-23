@@ -1,0 +1,324 @@
+{
+  "meta": {
+    "package_id": "MW-B",
+    "property_name": "Maplewood Commerce Center",
+    "tenant_name": "Halverson Sporting Goods",
+    "premises_sf": 24000,
+    "currency": "USD",
+    "schema_version": "1.0",
+    "story": "The cap year. Three years under a 5% cap on controllables: the cap billed as an escalator, a fee computed on the wrong base, and a security line that quietly leaves the capped pool."
+  },
+  "lease_lite": {
+    "share": {
+      "numerator_sf": 24000,
+      "denominator_basis": "GLA"
+    },
+    "cap": {
+      "applies_to": "controllable",
+      "pct": 5,
+      "method": "non_cumulative",
+      "basis": "amount_paid",
+      "base_year": 2022,
+      "base_year_amount": 86517.36,
+      "fee_treatment": "outside_cap"
+    },
+    "fees": [
+      {
+        "kind": "management",
+        "rate_pct": 3,
+        "base": "cam_only"
+      }
+    ],
+    "capital_life_years": 10
+  },
+  "years": [
+    {
+      "year": 2023,
+      "denominator_sf": 168000,
+      "lines": [
+        {
+          "label": "Landscaping & grounds",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 15118.4
+        },
+        {
+          "label": "Repairs & maintenance",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 26402.75
+        },
+        {
+          "label": "Sweeping & striping",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 6533.48
+        },
+        {
+          "label": "Security",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 17638.9
+        },
+        {
+          "label": "Trash removal",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 7102.3
+        },
+        {
+          "label": "Pest control",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 2186.4
+        },
+        {
+          "label": "Parking lot resurfacing – amortization (yr 2 of 10)",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 14850,
+          "capital": {
+            "total_cost": 148500,
+            "useful_life_months": 120,
+            "in_service": "2022-04-01"
+          }
+        },
+        {
+          "label": "Common area lighting – electricity",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 11388.52
+        },
+        {
+          "label": "Snow removal",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 13870.15
+        },
+        {
+          "label": "Management fee (3%)",
+          "section": "Fees",
+          "bucket": "non_controllable",
+          "amount": 8183.11,
+          "is_fee": true
+        },
+        {
+          "label": "Real estate taxes",
+          "section": "Taxes",
+          "bucket": "non_controllable",
+          "amount": 108412.6
+        },
+        {
+          "label": "Insurance",
+          "section": "Insurance",
+          "bucket": "non_controllable",
+          "amount": 49266.8
+        }
+      ],
+      "cap_summary": {
+        "pool_label": "Controllable CAM (subject to 5% cap)",
+        "pool_actual": 89832.23,
+        "pool_allowed": 90843.23,
+        "pool_billed": 89832.23
+      },
+      "tenant_summary": {
+        "pro_rata_share_pct": 14.2857,
+        "tenant_total": 40136.16,
+        "estimates_paid": 38400,
+        "balance_due": 1736.16
+      }
+    },
+    {
+      "year": 2024,
+      "denominator_sf": 168000,
+      "lines": [
+        {
+          "label": "Landscaping & grounds",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 14362.18
+        },
+        {
+          "label": "Repairs & maintenance",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 21880.12
+        },
+        {
+          "label": "Sweeping & striping",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 6745.9
+        },
+        {
+          "label": "Security",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 18204
+        },
+        {
+          "label": "Trash removal",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 7381.52
+        },
+        {
+          "label": "Pest control",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 2260.8
+        },
+        {
+          "label": "Parking lot resurfacing – amortization (yr 3 of 10)",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 14850,
+          "capital": {
+            "total_cost": 148500,
+            "useful_life_months": 120,
+            "in_service": "2022-04-01"
+          }
+        },
+        {
+          "label": "Common area lighting – electricity",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 11926.77
+        },
+        {
+          "label": "Snow removal",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 15212.4
+        },
+        {
+          "label": "Management fee (3%)",
+          "section": "Fees",
+          "bucket": "non_controllable",
+          "amount": 8347.83,
+          "is_fee": true
+        },
+        {
+          "label": "Real estate taxes",
+          "section": "Taxes",
+          "bucket": "non_controllable",
+          "amount": 112318.92
+        },
+        {
+          "label": "Insurance",
+          "section": "Insurance",
+          "bucket": "non_controllable",
+          "amount": 53118.44
+        }
+      ],
+      "cap_summary": {
+        "pool_label": "Controllable CAM (subject to 5% cap)",
+        "pool_actual": 85684.52,
+        "pool_allowed": 94323.84,
+        "pool_billed": 94323.84
+      },
+      "tenant_summary": {
+        "pro_rata_share_pct": 14.2857,
+        "tenant_total": 42178.27,
+        "estimates_paid": 40800,
+        "balance_due": 1378.27
+      }
+    },
+    {
+      "year": 2025,
+      "denominator_sf": 168000,
+      "lines": [
+        {
+          "label": "Landscaping & grounds",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 15240.66
+        },
+        {
+          "label": "Repairs & maintenance",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 24960.4
+        },
+        {
+          "label": "Sweeping & striping",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 7212.85
+        },
+        {
+          "label": "Trash removal",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 7860.22
+        },
+        {
+          "label": "Pest control",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 2397.18
+        },
+        {
+          "label": "Parking lot resurfacing – amortization (yr 4 of 10)",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 14850,
+          "capital": {
+            "total_cost": 148500,
+            "useful_life_months": 120,
+            "in_service": "2022-04-01"
+          }
+        },
+        {
+          "label": "Common area lighting – electricity",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 12488.03
+        },
+        {
+          "label": "Snow removal",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 16104.35
+        },
+        {
+          "label": "Life safety & patrol services",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 19950.36
+        },
+        {
+          "label": "Management fee (3%)",
+          "section": "Fees",
+          "bucket": "non_controllable",
+          "amount": 8839.1,
+          "is_fee": true
+        },
+        {
+          "label": "Real estate taxes",
+          "section": "Taxes",
+          "bucket": "non_controllable",
+          "amount": 115802.47
+        },
+        {
+          "label": "Insurance",
+          "section": "Insurance",
+          "bucket": "non_controllable",
+          "amount": 57770.3
+        }
+      ],
+      "cap_summary": {
+        "pool_label": "Controllable CAM (subject to 5% cap)",
+        "pool_actual": 72521.31,
+        "pool_allowed": 99040.03,
+        "pool_billed": 99040.03
+      },
+      "tenant_summary": {
+        "pro_rata_share_pct": 14.2857,
+        "tenant_total": 47142.04,
+        "estimates_paid": 43200,
+        "balance_due": 3942.04
+      }
+    }
+  ]
+}

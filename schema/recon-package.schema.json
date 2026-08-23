@@ -1,0 +1,155 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://red-flag-scanner.dev/schema/recon-package.schema.json",
+  "title": "ReconPackage",
+  "description": "A multi-year operating-expense reconciliation package for one lease / premises — the canonical input of the Red-Flag Scanner engine. Mirrors src/engine/types.ts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["meta", "lease_lite", "years"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["package_id", "property_name", "tenant_name", "premises_sf", "currency", "schema_version"],
+      "properties": {
+        "package_id": { "type": "string", "minLength": 1 },
+        "property_name": { "type": "string" },
+        "tenant_name": { "type": "string" },
+        "premises_sf": { "type": "number", "exclusiveMinimum": 0 },
+        "currency": { "const": "USD" },
+        "schema_version": { "const": "1.0" },
+        "story": { "type": "string" }
+      }
+    },
+    "lease_lite": { "$ref": "#/definitions/LeaseLite" },
+    "years": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/ReconYear" }
+    }
+  },
+  "definitions": {
+    "Money": { "type": "number", "multipleOf": 0.01 },
+    "LeaseLite": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["share", "fees"],
+      "properties": {
+        "share": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["numerator_sf", "denominator_basis"],
+          "properties": {
+            "stated_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+            "numerator_sf": { "type": "number", "exclusiveMinimum": 0 },
+            "denominator_basis": { "enum": ["GLA", "GLOA", "unknown"] }
+          }
+        },
+        "cap": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["applies_to", "pct", "method", "basis", "fee_treatment"],
+          "properties": {
+            "applies_to": { "enum": ["controllable", "all_cam", "total_opex"] },
+            "pct": { "type": "number", "minimum": 0 },
+            "method": { "enum": ["non_cumulative", "cumulative", "compounded"] },
+            "basis": { "enum": ["amount_paid", "actual_expenses", "prior_cap"] },
+            "base_year_amount": { "$ref": "#/definitions/Money" },
+            "base_year": { "type": "integer", "minimum": 1900, "maximum": 2200 },
+            "fee_treatment": { "enum": ["inside_cap", "outside_cap"] }
+          }
+        },
+        "fees": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["kind", "rate_pct", "base"],
+            "properties": {
+              "kind": { "enum": ["management", "administrative"] },
+              "rate_pct": { "type": "number", "minimum": 0 },
+              "base": { "enum": ["cam_only", "cam_plus_insurance", "all_opex", "receipts"] }
+            }
+          }
+        },
+        "capital_threshold": { "$ref": "#/definitions/Money" },
+        "capital_life_years": { "type": "number", "exclusiveMinimum": 0 },
+        "gross_up": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["allowed"],
+          "properties": {
+            "allowed": { "type": "boolean" },
+            "to_pct": { "type": "number", "minimum": 0, "maximum": 100 }
+          }
+        }
+      }
+    },
+    "ReconYear": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["year", "lines"],
+      "properties": {
+        "year": { "type": "integer", "minimum": 1900, "maximum": 2200 },
+        "occupancy_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "denominator_sf": { "type": "number", "exclusiveMinimum": 0 },
+        "gross_up_applied": { "type": "boolean" },
+        "lines": { "type": "array", "items": { "$ref": "#/definitions/ReconLine" } },
+        "cap_summary": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["pool_actual", "pool_billed"],
+          "properties": {
+            "pool_label": { "type": "string" },
+            "pool_actual": { "$ref": "#/definitions/Money" },
+            "pool_allowed": { "$ref": "#/definitions/Money" },
+            "pool_billed": { "$ref": "#/definitions/Money" }
+          }
+        },
+        "tenant_summary": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "pro_rata_share_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+            "tenant_total": { "$ref": "#/definitions/Money" },
+            "estimates_paid": { "$ref": "#/definitions/Money" },
+            "balance_due": { "$ref": "#/definitions/Money" }
+          }
+        }
+      }
+    },
+    "ReconLine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "section", "amount"],
+      "properties": {
+        "label": { "type": "string", "minLength": 1 },
+        "section": { "type": "string" },
+        "bucket": { "enum": ["controllable", "non_controllable", "unknown"] },
+        "amount": { "$ref": "#/definitions/Money" },
+        "tenant_amount": { "$ref": "#/definitions/Money" },
+        "is_fee": { "type": "boolean" },
+        "capital": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["total_cost", "useful_life_months", "in_service"],
+          "properties": {
+            "total_cost": { "$ref": "#/definitions/Money" },
+            "useful_life_months": { "type": "integer", "minimum": 1 },
+            "interest_rate_pct": { "type": "number", "minimum": 0 },
+            "in_service": { "type": "string", "pattern": "^\\d{4}-\\d{2}(-\\d{2})?$" }
+          }
+        },
+        "gross_up": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["actual"],
+          "properties": {
+            "actual": { "$ref": "#/definitions/Money" },
+            "factor": { "type": "number", "exclusiveMinimum": 0 }
+          }
+        }
+      }
+    }
+  }
+}

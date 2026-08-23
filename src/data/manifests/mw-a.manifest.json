@@ -1,0 +1,17 @@
+{
+  "package_id": "MW-A",
+  "expected_total_findings": 1,
+  "expected_high": 0,
+  "findings": [
+    {
+      "check_id": "RF-01",
+      "year": [
+        2024,
+        2025
+      ],
+      "category": "Snow removal",
+      "severity": "review",
+      "note": "harsh winter: +18.0%, the teaching moment — a flag is a question"
+    }
+  ]
+}

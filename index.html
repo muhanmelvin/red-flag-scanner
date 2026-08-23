@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Privacy by construction: this page can load only itself. No connections,
+         no third-party scripts, no fonts, no images from anywhere else. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="description"
+      content="Recon Red-Flag Scanner — a deterministic, browser-only checklist that ranks red flags in a landlord's operating-expense reconciliation. Your file never leaves your machine."
+    />
+    <title>Recon Red-Flag Scanner</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%231f5c7a'/%3E%3Cpath d='M9 7h3v18H9zM12 8l11 4-11 4z' fill='%23fff'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <a class="skip-link" href="#findings">Skip to findings</a>
+    <header class="masthead">
+      <div class="wrap masthead-inner">
+        <p class="eyebrow">Recon Forensics · Red-Flag Scanner</p>
+        <h1>Run the tenant-side checklist on a landlord's reconciliation</h1>
+        <p class="standfirst">
+          The landlord prepares the statement, allocates the expenses, and holds all the records. This scanner
+          runs the tenant-side checklist in your browser &mdash; twelve deterministic checks, each finding with its
+          arithmetic and a narrative written to paste into a finding letter.
+          <strong>Your file never leaves your machine.</strong>
+        </p>
+        <div class="provenance">
+          <span>Deterministic engine &mdash; no AI in the arithmetic</span>
+          <span>Runs entirely in this page; no server, no upload</span>
+          <span>Synthetic leases only &mdash; no client data</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section id="picker" class="zone" aria-labelledby="picker-h">
+        <h2 id="picker-h" class="zone-title">Pick a reconciliation package</h2>
+        <div id="picker-cards" class="cards"></div>
+        <div id="upload-panel" class="panel upload-panel" hidden></div>
+      </section>
+
+      <section id="summary" class="zone" aria-labelledby="summary-h" hidden>
+        <h2 id="summary-h" class="zone-title">Summary</h2>
+        <div id="summary-body"></div>
+      </section>
+
+      <section id="findings" class="zone" aria-labelledby="findings-h" hidden>
+        <div class="zone-head">
+          <h2 id="findings-h" class="zone-title">Findings</h2>
+          <button id="config-toggle" class="ghost-btn" type="button" aria-expanded="false" aria-controls="config-drawer">Scan settings</button>
+        </div>
+        <div id="config-drawer" class="panel config-drawer" hidden></div>
+        <ol id="findings-list" class="findings"></ol>
+        <div id="skips" class="skips"></div>
+      </section>
+    </main>
+
+    <footer class="wrap colophon">
+      <h2>How this is built</h2>
+      <p>
+        The page contains no audit arithmetic of its own. Every flag, every dollar figure and every line of working
+        comes from <code>scan()</code> &mdash; a pure TypeScript function compiled straight into this page, the same
+        function a test suite pins to the cent against hand-computed fixtures and against three synthetic
+        reconciliation packages with planted findings. Deterministic: same input, same output, every time.
+      </p>
+      <p>
+        There is no AI in the arithmetic. A language model can draft prose; it should never decide whether a cap was
+        breached or by how much. The roadmap's narrative layer will write <em>from</em> engine output, never compute
+        numbers.
+      </p>
+      <p>
+        The three packages are synthetic, written for teaching and demonstration: the fictional Maplewood Commerce
+        Center and its fictional tenants. No client lease, statement or figure appears anywhere in this page &mdash;
+        two automated gates refuse to ship if one does. Uploads are parsed in your browser with SheetJS and scanned
+        here; the page's security policy forbids it from opening any network connection at all.
+      </p>
+      <p id="build-info" class="build-info"></p>
+    </footer>
+
+    <script type="module" src="/src/ui/main.ts"></script>
+  </body>
+</html>

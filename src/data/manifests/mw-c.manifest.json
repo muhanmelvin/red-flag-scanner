@@ -1,0 +1,105 @@
+{
+  "package_id": "MW-C",
+  "ledger": {
+    "2021": {
+      "pool": 225136.58,
+      "share_excess_tenant": 0,
+      "insurance_grossup_pool": 0,
+      "insurance_grossup_tenant": 0,
+      "resurfacing_excess_if_capital_pool": 0,
+      "resurfacing_excess_if_capital_tenant": 0
+    },
+    "2022": {
+      "pool": 390648.76,
+      "share_excess_tenant": 15301.71,
+      "insurance_grossup_pool": 7154.5,
+      "insurance_grossup_tenant": 1558.04,
+      "resurfacing_excess_if_capital_pool": 133650,
+      "resurfacing_excess_if_capital_tenant": 29104.96
+    }
+  },
+  "findings": [
+    {
+      "check_id": "RF-09",
+      "year": 2022,
+      "category": "Parking Lot R&M",
+      "severity": "review",
+      "expected_impact_range": [
+        28522,
+        29689
+      ]
+    },
+    {
+      "check_id": "RF-10",
+      "year": 2022,
+      "category": "Insurance",
+      "severity": "high",
+      "expected_impact_range": [
+        1526,
+        1591
+      ]
+    },
+    {
+      "check_id": "RF-08",
+      "year": 2022,
+      "category": "Pro-rata share",
+      "severity": "high",
+      "expected_impact_range": [
+        14995,
+        15609
+      ],
+      "note": "billed 21.777% vs stated 17.86%"
+    },
+    {
+      "check_id": "RF-08",
+      "year": [
+        2021,
+        2022
+      ],
+      "category": "Pro-rata share",
+      "severity": "review",
+      "note": "denominator 168,000 → 137,760"
+    },
+    {
+      "check_id": "RF-11",
+      "year": 2022,
+      "category": "Balance due",
+      "severity": "high",
+      "expected_impact_range": [
+        612,
+        613
+      ]
+    },
+    {
+      "check_id": "RF-12",
+      "year": [
+        2021,
+        2022
+      ],
+      "category": "Janitorial – common areas",
+      "severity": "review"
+    },
+    {
+      "check_id": "RF-05",
+      "year": 2022,
+      "category": "Parking Lot R&M",
+      "severity": "review",
+      "note": "round and new"
+    },
+    {
+      "check_id": "RF-05",
+      "year": 2022,
+      "category": "Landscaping & grounds",
+      "severity": "info"
+    },
+    {
+      "check_id": "RF-02",
+      "year": [
+        2021,
+        2022
+      ],
+      "category": "Parking Lot R&M",
+      "severity": "review"
+    }
+  ]
+}

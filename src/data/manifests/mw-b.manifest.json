@@ -1,0 +1,158 @@
+{
+  "package_id": "MW-B",
+  "expected_high_min": 7,
+  "ledger": {
+    "2023": {
+      "pool_actual": 89832.23,
+      "allowed_correct": 90843.23,
+      "paid_correct": 89832.23,
+      "billed": 89832.23,
+      "ll_allowed": 90843.23,
+      "cap_excess_pool": 0,
+      "cap_excess_tenant": 0,
+      "fee_billed": 8183.11,
+      "fee_correct": 3452.73,
+      "fee_excess_pool": 4730.38,
+      "fee_excess_tenant": 675.77,
+      "security_outside_pool": 0,
+      "migration_excess_pool": 0,
+      "migration_excess_tenant": 0
+    },
+    "2024": {
+      "pool_actual": 85684.52,
+      "allowed_correct": 94323.84,
+      "paid_correct": 85684.52,
+      "billed": 94323.84,
+      "ll_allowed": 94323.84,
+      "cap_excess_pool": 8639.32,
+      "cap_excess_tenant": 1234.19,
+      "fee_billed": 8347.83,
+      "fee_correct": 3384.71,
+      "fee_excess_pool": 4963.12,
+      "fee_excess_tenant": 709.02,
+      "security_outside_pool": 0,
+      "migration_excess_pool": 0,
+      "migration_excess_tenant": 0
+    },
+    "2025": {
+      "pool_actual": 72521.31,
+      "allowed_correct": 89968.75,
+      "paid_correct": 72521.31,
+      "billed": 99040.03,
+      "ll_allowed": 99040.03,
+      "cap_excess_pool": 26518.72,
+      "cap_excess_tenant": 3788.38,
+      "fee_billed": 8839.1,
+      "fee_correct": 3631.92,
+      "fee_excess_pool": 5207.18,
+      "fee_excess_tenant": 743.88,
+      "security_outside_pool": 19950.36,
+      "migration_excess_pool": 2502.92,
+      "migration_excess_tenant": 357.56
+    }
+  },
+  "findings": [
+    {
+      "check_id": "RF-06",
+      "year": 2024,
+      "category": "Controllable CAM (subject to 5% cap)",
+      "severity": "high",
+      "expected_impact_range": [
+        1209,
+        1260
+      ]
+    },
+    {
+      "check_id": "RF-06",
+      "year": 2025,
+      "category": "Controllable CAM (subject to 5% cap)",
+      "severity": "high",
+      "expected_impact_range": [
+        3712,
+        3866
+      ]
+    },
+    {
+      "check_id": "RF-06",
+      "year": [
+        2023,
+        2025
+      ],
+      "category": "Capped pool",
+      "severity": "review",
+      "note": "cap-on-cap pattern: billed grows exactly 5% in 2024 and 2025"
+    },
+    {
+      "check_id": "RF-07",
+      "year": 2023,
+      "category": "Management fee (3%)",
+      "severity": "high",
+      "expected_impact_range": [
+        662,
+        691
+      ]
+    },
+    {
+      "check_id": "RF-07",
+      "year": 2024,
+      "category": "Management fee (3%)",
+      "severity": "high",
+      "expected_impact_range": [
+        694,
+        725
+      ]
+    },
+    {
+      "check_id": "RF-07",
+      "year": 2025,
+      "category": "Management fee (3%)",
+      "severity": "high",
+      "expected_impact_range": [
+        729,
+        760
+      ]
+    },
+    {
+      "check_id": "RF-04",
+      "year": [
+        2024,
+        2025
+      ],
+      "category": "Life safety & patrol services",
+      "severity": "high",
+      "expected_impact_range": [
+        350,
+        366
+      ]
+    },
+    {
+      "check_id": "RF-02",
+      "year": [
+        2024,
+        2025
+      ],
+      "category": "Life safety & patrol services",
+      "severity": "high"
+    },
+    {
+      "check_id": "RF-03",
+      "year": [
+        2024,
+        2025
+      ],
+      "category": "Security",
+      "severity": "review"
+    },
+    {
+      "check_id": "RF-01",
+      "year": [
+        2023,
+        2024
+      ],
+      "category": "Repairs & maintenance",
+      "severity": "review",
+      "note": "the −17% dip that puts the pool under the cap"
+    }
+  ],
+  "total_planted_tenant_impact": 7508.8
+}

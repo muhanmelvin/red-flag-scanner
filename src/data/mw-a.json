@@ -1,0 +1,231 @@
+{
+  "meta": {
+    "package_id": "MW-A",
+    "property_name": "Maplewood Commerce Center",
+    "tenant_name": "Tessaro Home Goods",
+    "premises_sf": 18000,
+    "currency": "USD",
+    "schema_version": "1.0",
+    "story": "The clean year. Two years, no cap, everything ties — except one honest 18% swing on snow removal. Proves the scanner doesn't cry wolf."
+  },
+  "lease_lite": {
+    "share": {
+      "numerator_sf": 18000,
+      "denominator_basis": "GLA"
+    },
+    "fees": [
+      {
+        "kind": "management",
+        "rate_pct": 3,
+        "base": "cam_only"
+      }
+    ],
+    "capital_life_years": 10
+  },
+  "years": [
+    {
+      "year": 2024,
+      "denominator_sf": 168000,
+      "lines": [
+        {
+          "label": "Landscaping & grounds",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 14362.18,
+          "tenant_amount": 1538.81
+        },
+        {
+          "label": "Repairs & maintenance",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 22918.4,
+          "tenant_amount": 2455.55
+        },
+        {
+          "label": "Sweeping & striping",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 6745.9,
+          "tenant_amount": 722.78
+        },
+        {
+          "label": "Security",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 18204,
+          "tenant_amount": 1950.43
+        },
+        {
+          "label": "Trash removal",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 7381.52,
+          "tenant_amount": 790.88
+        },
+        {
+          "label": "Pest control",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 2260.8,
+          "tenant_amount": 242.23
+        },
+        {
+          "label": "Parking lot resurfacing – amortization (yr 3 of 10)",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 14850,
+          "capital": {
+            "total_cost": 148500,
+            "useful_life_months": 120,
+            "in_service": "2022-04-01"
+          },
+          "tenant_amount": 1591.07
+        },
+        {
+          "label": "Common area lighting – electricity",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 11926.77,
+          "tenant_amount": 1277.87
+        },
+        {
+          "label": "Snow removal",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 15212.4,
+          "tenant_amount": 1629.9
+        },
+        {
+          "label": "Management fee (3%)",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 3415.86,
+          "is_fee": true,
+          "tenant_amount": 365.99
+        },
+        {
+          "label": "Real estate taxes",
+          "section": "Taxes",
+          "bucket": "non_controllable",
+          "amount": 112318.92,
+          "tenant_amount": 12034.19
+        },
+        {
+          "label": "Insurance",
+          "section": "Insurance",
+          "bucket": "non_controllable",
+          "amount": 53118.44,
+          "tenant_amount": 5691.27
+        }
+      ],
+      "tenant_summary": {
+        "pro_rata_share_pct": 10.7143,
+        "tenant_total": 30290.97,
+        "estimates_paid": 39600,
+        "balance_due": -9309.03
+      }
+    },
+    {
+      "year": 2025,
+      "denominator_sf": 168000,
+      "lines": [
+        {
+          "label": "Landscaping & grounds",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 14905.7,
+          "tenant_amount": 1597.04
+        },
+        {
+          "label": "Repairs & maintenance",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 21466.15,
+          "tenant_amount": 2299.95
+        },
+        {
+          "label": "Sweeping & striping",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 6981.25,
+          "tenant_amount": 747.99
+        },
+        {
+          "label": "Security",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 18750.12,
+          "tenant_amount": 2008.94
+        },
+        {
+          "label": "Trash removal",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 7602.96,
+          "tenant_amount": 814.6
+        },
+        {
+          "label": "Pest control",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 2318.64,
+          "tenant_amount": 248.43
+        },
+        {
+          "label": "Parking lot resurfacing – amortization (yr 4 of 10)",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 14850,
+          "capital": {
+            "total_cost": 148500,
+            "useful_life_months": 120,
+            "in_service": "2022-04-01"
+          },
+          "tenant_amount": 1591.07
+        },
+        {
+          "label": "Common area lighting – electricity",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 12488.03,
+          "tenant_amount": 1338
+        },
+        {
+          "label": "Snow removal",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 17950.63,
+          "tenant_amount": 1923.28
+        },
+        {
+          "label": "Management fee (3%)",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 3519.4,
+          "is_fee": true,
+          "tenant_amount": 377.08
+        },
+        {
+          "label": "Real estate taxes",
+          "section": "Taxes",
+          "bucket": "non_controllable",
+          "amount": 115802.47,
+          "tenant_amount": 12407.42
+        },
+        {
+          "label": "Insurance",
+          "section": "Insurance",
+          "bucket": "non_controllable",
+          "amount": 57770.3,
+          "tenant_amount": 6189.68
+        }
+      ],
+      "tenant_summary": {
+        "pro_rata_share_pct": 10.7143,
+        "tenant_total": 31543.48,
+        "estimates_paid": 41400,
+        "balance_due": -9856.52
+      }
+    }
+  ]
+}
