@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: typecheck → test → build → build-gate
+    runs-on: ubuntu-latest
+    env:
+      # Private client-data deny-list (JSON array) — see gates/README.md.
+      # Set as a repository secret. The build gate refuses to run without it.
+      CLIENT_DENYLIST: ${{ secrets.CLIENT_DENYLIST }}
+      REQUIRE_PRIVATE_DENYLIST: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - run: npm run build:single
+      - uses: actions/upload-artifact@v4
+        with:
+          name: red-flag-scanner-single-file
+          path: dist-single/index.html
+
+  # Deploys the static bundle to GitHub Pages on every push to main.
+  # Enable Pages with "Source: GitHub Actions" once in repo Settings → Pages.
+  # Cloudflare Pages (the plan's primary host) needs no workflow: connect the
+  # repo, build command `npm run build`, output `dist`, env vars CLIENT_DENYLIST
+  # and REQUIRE_PRIVATE_DENYLIST=1.
+  deploy-pages:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      CLIENT_DENYLIST: ${{ secrets.CLIENT_DENYLIST }}
+      REQUIRE_PRIVATE_DENYLIST: "1"
+      BASE_PATH: /${{ github.event.repository.name }}/
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v4

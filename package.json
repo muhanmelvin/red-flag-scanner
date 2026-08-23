@@ -2,7 +2,7 @@
   "name": "red-flag-scanner",
   "version": "0.1.0",
   "private": true,
-  "description": "Recon Red-Flag Scanner — a deterministic, browser-only checklist that ranks red flags in a landlord's operating-expense reconciliation. No AI in the arithmetic; no data leaves the browser.",
+  "description": "Recon Red-Flag Scanner \— a deterministic, browser-only checklist that ranks red flags in a landlord's operating-expense reconciliation. No AI in the arithmetic; no data leaves the browser.",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,7 +11,7 @@
     "test:watch": "vitest",
     "data:build": "node tools/author-packages.mjs",
     "build": "vite build && node scripts/build-gate.mjs",
-    "build:single": "cross-env SINGLE_FILE=1 vite build && node scripts/build-gate.mjs",
+    "build:single": "cross-env SINGLE_FILE=1 vite build && node scripts/finalize-single.mjs && node scripts/build-gate.mjs dist-single",
     "preview": "vite preview",
     "ci": "npm run typecheck && npm test && npm run build"
   },
