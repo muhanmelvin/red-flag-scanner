@@ -52,7 +52,10 @@ jobs:
     env:
       CLIENT_DENYLIST: ${{ secrets.CLIENT_DENYLIST }}
       REQUIRE_PRIVATE_DENYLIST: "1"
-      BASE_PATH: /${{ github.event.repository.name }}/
+      # BASE_PATH is deliberately unset: public/CNAME serves this build at the
+      # root of scanner.petriumalpha.com, so assets resolve from "/". Set it to
+      # /${{ github.event.repository.name }}/ only if you drop the custom domain
+      # and serve from https://<user>.github.io/<repo>/ instead.
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

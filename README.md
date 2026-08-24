@@ -4,7 +4,7 @@ A deterministic, browser-only checklist that ranks red flags in a landlord's ope
 
 > The landlord prepares the statement, allocates the expenses, and holds all the records. This scanner runs the tenant-side checklist in your browser — **your file never leaves your machine.**
 
-**Live demo:** _set after first deploy — see [Hosting](#hosting)_ · **Single-file build:** `npm run build:single` → `dist-single/index.html` opens offline.
+**Live:** https://scanner.petriumalpha.com/ · **Single-file build:** `npm run build:single` → `dist-single/index.html` opens offline.
 
 ![Sixty-second scan of the MW-B package](docs/demo.gif)
 
@@ -100,11 +100,14 @@ The test gate and build gate read a private deny-list that is **never committed*
 
 ## Hosting
 
-Public repo + free static host, $0:
+Public repo + free static host, $0. **GitHub Pages**, wired in [`.github/workflows/ci.yml`](.github/workflows/ci.yml): every push to `main` typechecks, tests, builds through the client-data gate, and deploys `dist/` to https://scanner.petriumalpha.com/.
 
-- **Cloudflare Pages** (primary): Connect to Git → build command `npm run build`, output `dist`, env vars `CLIENT_DENYLIST` (JSON array) and `REQUIRE_PRIVATE_DENYLIST=1`. Custom domain free; Registrar domain ≈ $10/yr.
-- **GitHub Pages** (wired in [`.github/workflows/ci.yml`](.github/workflows/ci.yml)): enable Pages with *Source: GitHub Actions* and add the `CLIENT_DENYLIST` secret; every push to `main` deploys to `https://<user>.github.io/<repo>/`.
-- Linking it from an existing site is a menu item pointing at either URL (or a subdomain mapped to the Pages project).
+Two settings are not in the repo and have to be set once, in the repo's own settings:
+
+- **Secret** `CLIENT_DENYLIST` (a JSON array) under Settings → Secrets and variables → Actions. `REQUIRE_PRIVATE_DENYLIST=1` in the workflow makes a missing secret a red build rather than an unguarded deploy — do not "fix" a red build by removing it.
+- **Pages source**: Settings → Pages → Source → *GitHub Actions*, with the custom domain set to the hostname in [`public/CNAME`](public/CNAME) and **Enforce HTTPS** ticked.
+
+`public/CNAME` is copied verbatim into `dist/`, so the domain travels with every deploy. Because the site is served at the root of its own subdomain, `BASE_PATH` stays unset; serving instead from `https://<user>.github.io/<repo>/` means setting `BASE_PATH: /<repo>/` in the deploy job and deleting `public/CNAME`.
 
 ## Roadmap
 

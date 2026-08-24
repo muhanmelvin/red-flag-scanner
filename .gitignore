@@ -7,3 +7,7 @@ dist-single/
 # Client-data gate: the private deny-list is injected locally or via CI secret,
 # never committed. See gates/README.md.
 gates/denylist.local.json
+
+# Working material, not part of the published repo.
+melvin_sandbox/
+red-flag-scanner-build-plan.md
