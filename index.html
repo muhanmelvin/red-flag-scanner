@@ -49,12 +49,20 @@
         <div id="summary-body"></div>
       </section>
 
+      <nav id="view-tabs" class="view-tabs" aria-label="Views" hidden></nav>
+
+      <section id="recon" class="zone" aria-labelledby="recon-h" hidden>
+        <h2 id="recon-h" class="zone-title">The statement, reassembled</h2>
+        <div id="recon-body"></div>
+      </section>
+
       <section id="findings" class="zone" aria-labelledby="findings-h" hidden>
         <div class="zone-head">
           <h2 id="findings-h" class="zone-title">Findings</h2>
           <button id="config-toggle" class="ghost-btn" type="button" aria-expanded="false" aria-controls="config-drawer">Scan settings</button>
         </div>
         <div id="config-drawer" class="panel config-drawer" hidden></div>
+        <div id="findings-filter" class="filter-note" hidden></div>
         <ol id="findings-list" class="findings"></ol>
         <div id="skips" class="skips"></div>
       </section>

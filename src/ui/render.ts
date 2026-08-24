@@ -120,18 +120,41 @@ export function renderSummary(r: ScanResult, pkg: ReconPackage): HTMLElement {
 }
 
 // ---------------------------------------------------------------------------
+// View tabs: findings / statement / lease
+// ---------------------------------------------------------------------------
+
+export type ViewId = "findings" | "recon" | "lease";
+
+export function renderViewTabs(current: ViewId, tabs: ReadonlyArray<{ id: ViewId; label: string; note: string }>, onPick: (v: ViewId) => void): HTMLElement[] {
+  return tabs.map((t) =>
+    h(
+      "button",
+      { type: "button", class: "view-tab", "aria-pressed": String(t.id === current), title: t.note, onClick: () => onPick(t.id) },
+      h("span", { class: "view-tab-label" }, t.label),
+      h("span", { class: "view-tab-note" }, t.note),
+    ),
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Findings list
 // ---------------------------------------------------------------------------
 
-export function renderFindings(r: ScanResult, pkg: ReconPackage): HTMLElement[] {
-  if (r.findings.length === 0) {
+export interface FindingsOptions {
+  /** True when the statement view has rows to show for this finding. */
+  canShowInStatement?: (f: Finding) => boolean;
+  onShowInStatement?: (f: Finding) => void;
+}
+
+export function renderFindings(r: ScanResult, pkg: ReconPackage, opts: FindingsOptions = {}, findings: readonly Finding[] = r.findings): HTMLElement[] {
+  if (findings.length === 0) {
     return [h("li", { class: "empty-state" }, "No findings. Every check that could run came back clean — which is itself a result worth recording.")];
   }
   const ids = new Set(r.findings.map((f) => f.id));
-  return r.findings.map((f) => renderFinding(f, pkg, ids));
+  return findings.map((f) => renderFinding(f, pkg, ids, opts));
 }
 
-function renderFinding(f: Finding, pkg: ReconPackage, allIds: Set<string>): HTMLElement {
+function renderFinding(f: Finding, pkg: ReconPackage, allIds: Set<string>, opts: FindingsOptions): HTMLElement {
   const sev = f.severity;
   const chip = h("span", { class: `chip ${sev}` }, h("span", { "aria-hidden": "true" }, SEVERITY_ICON[sev]), SEVERITY_LABEL[sev]);
   const meta = h(
@@ -176,6 +199,11 @@ function renderFinding(f: Finding, pkg: ReconPackage, allIds: Set<string>): HTML
     }
   });
 
+  const showBtn =
+    opts.onShowInStatement && (opts.canShowInStatement?.(f) ?? true)
+      ? h("button", { type: "button", class: "copy-btn", onClick: () => opts.onShowInStatement!(f) }, "Show in statement")
+      : null;
+
   const body = h(
     "div",
     { class: "f-body" },
@@ -194,7 +222,7 @@ function renderFinding(f: Finding, pkg: ReconPackage, allIds: Set<string>): HTML
             ...related.flatMap((id, i) => [i ? ", " : "", h("a", { href: `#f-${cssId(id)}` }, id.split(":")[0] + " " + (id.split(":")[3] ?? id.split(":")[2] ?? ""))]),
           )
         : null,
-      copyBtn,
+      h("span", { class: "f-actions" }, showBtn, copyBtn),
     ),
   );
   const card = h("details", { class: `finding ${sev}`, id: `f-${cssId(f.id)}` }, summary, body);
