@@ -241,6 +241,30 @@ tr.hl-row th.rt-line { font-weight: 600; }
 td.rt-num.hl { background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
 td.rt-gap .rt-val { color: var(--ink-faint); }
 
+/* ---- the model lease ---- */
+.lease-doc { max-width: 84ch; margin: 0 auto; padding: 26px 30px 34px; display: grid; gap: 4px; }
+.lease-notice { margin: 0 0 14px; font-size: 0.74rem; color: var(--ink-faint); border-bottom: 1px solid var(--rule); padding-bottom: 10px; }
+.lease-title { font-family: var(--font-serif); font-size: 1.24rem; font-weight: 600; margin: 0; text-align: center; letter-spacing: 0.01em; }
+.lease-parties { margin: 2px 0 0; text-align: center; font-family: var(--font-serif); font-size: 0.92rem; color: var(--ink-muted); }
+.lease-legend { margin: 10px 0 20px; text-align: center; font-size: 0.74rem; color: var(--ink-faint); }
+.lease-article { display: grid; gap: 14px; margin-top: 22px; }
+.lease-art-h { margin: 0; font-family: var(--font-serif); font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; text-align: center; color: var(--ink-muted); border-top: 1px solid var(--rule); padding-top: 16px; }
+.lease-section { display: grid; gap: 7px; scroll-margin-top: 20px; padding: 6px 10px; margin: 0 -10px; border-radius: 2px; }
+.lease-sec-h { margin: 0; font-size: 0.9rem; font-weight: 600; font-family: var(--font-serif); display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+.lease-sec-h .sec-ref { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); font-weight: 600; }
+.lease-sec-h .sec-tag { font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); border: 1px solid var(--rule-strong); border-radius: 2px; padding: 0 6px; font-weight: 600; }
+.lease-p { margin: 0; font-family: var(--font-serif); font-size: 0.94rem; line-height: 1.68; text-align: justify; hyphens: auto; }
+.lease-section.absent .lease-p { color: var(--ink-muted); font-style: italic; }
+.lease-section.shell .lease-p { color: var(--ink-muted); }
+.param { background: var(--accent-soft); border-bottom: 1px solid var(--accent); padding: 0 2px; border-radius: 2px 2px 0 0; font-style: normal; }
+.lease-section.flash { animation: clause-flash 1.9s ease-out 1; }
+@keyframes clause-flash {
+  0%, 45% { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+  100% { background: transparent; box-shadow: inset 3px 0 0 transparent; }
+}
+.chip-clause { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; color: var(--accent); text-decoration: none; border: 1px solid var(--rule-strong); border-radius: 2px; padding: 1px 6px; white-space: nowrap; }
+.chip-clause:hover { border-color: var(--accent); background: var(--accent-soft); }
+
 .filter-note { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; justify-content: space-between; font-size: 0.82rem; color: var(--ink-muted); background: var(--surface); border: 1px solid var(--rule); border-radius: 2px; padding: 8px 12px; }
 .f-actions { display: inline-flex; gap: 8px; flex-wrap: wrap; }
 

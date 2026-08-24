@@ -1,5 +1,6 @@
 import type { Finding, ReconPackage, ScanConfig, ScanResult, Severity } from "../engine/types.ts";
 import { CHECK_CATALOG } from "../engine/registry.ts";
+import { anchorFor, CLAUSE_FOR_CHECK, SECTION_TITLE } from "../lease/sections.ts";
 import { h } from "./dom.ts";
 import { findingToText, money, moneyCompact, SEVERITY_ICON, SEVERITY_LABEL, yearText } from "./format.ts";
 
@@ -144,6 +145,13 @@ export interface FindingsOptions {
   /** True when the statement view has rows to show for this finding. */
   canShowInStatement?: (f: Finding) => boolean;
   onShowInStatement?: (f: Finding) => void;
+  /** Jump the reader to a clause of the model lease. */
+  onCite?: (ref: string) => void;
+}
+
+/** The clause a check argues from — first ref is the chip, the rest the tooltip. */
+export function clauseRefs(check_id: string): readonly string[] {
+  return CLAUSE_FOR_CHECK[check_id] ?? [];
 }
 
 export function renderFindings(r: ScanResult, pkg: ReconPackage, opts: FindingsOptions = {}, findings: readonly Finding[] = r.findings): HTMLElement[] {
@@ -157,11 +165,30 @@ export function renderFindings(r: ScanResult, pkg: ReconPackage, opts: FindingsO
 function renderFinding(f: Finding, pkg: ReconPackage, allIds: Set<string>, opts: FindingsOptions): HTMLElement {
   const sev = f.severity;
   const chip = h("span", { class: `chip ${sev}` }, h("span", { "aria-hidden": "true" }, SEVERITY_ICON[sev]), SEVERITY_LABEL[sev]);
+  const refs = clauseRefs(f.check_id);
+  const cite =
+    refs.length && opts.onCite
+      ? h(
+          "a",
+          {
+            class: "chip-clause",
+            href: `#${anchorFor(refs[0]!)}`,
+            title: refs.map((r) => `§${r} ${SECTION_TITLE[r] ?? ""}`).join(" · "),
+            onClick: (e: Event) => {
+              e.preventDefault();
+              e.stopPropagation();
+              opts.onCite!(refs[0]!);
+            },
+          },
+          `§${refs[0]}`,
+        )
+      : null;
   const meta = h(
     "span",
     { class: "f-meta" },
     chip,
     h("span", { class: "chip-check" }, f.check_id),
+    cite,
     h("span", {}, yearText(f.year)),
     f.category ? h("span", {}, f.category) : null,
     f.suppressed_by_materiality ? h("span", { class: "suppressed" }, "below materiality") : null,

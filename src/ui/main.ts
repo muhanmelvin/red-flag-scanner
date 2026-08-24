@@ -15,6 +15,10 @@ import { renderConfig, renderFindings, renderPicker, renderSkips, renderSummary,
 import type { ReconTableModel } from "./recon-model.ts";
 import { buildReconModel, rowKeysForFinding, yearsOfFinding } from "./recon-model.ts";
 import { renderReconTable } from "./recon-table.ts";
+import type { LeaseDoc } from "../lease/doc.ts";
+import { buildLeaseDoc } from "../lease/doc.ts";
+import { anchorFor } from "../lease/sections.ts";
+import { renderLeaseDoc } from "./lease-view.ts";
 import { mountUploadPanel } from "./upload.ts";
 
 interface Highlight {
@@ -29,10 +33,13 @@ interface State {
   config: ScanConfig;
   result: ScanResult | null;
   model: ReconTableModel | null;
+  doc: LeaseDoc | null;
   view: ViewId;
   highlight: Highlight | null;
   /** A statement row key: the findings list narrows to findings about that row. */
   findingFilter: string | null;
+  /** A lease section ref to flash after a citation jump. */
+  flashRef: string | null;
   uploadOpen: boolean;
   configOpen: boolean;
 }
@@ -43,9 +50,11 @@ const state: State = {
   config: { ...DEFAULT_CONFIG },
   result: null,
   model: null,
+  doc: null,
   view: "findings",
   highlight: null,
   findingFilter: null,
+  flashRef: null,
   uploadOpen: false,
   configOpen: false,
 };
@@ -55,6 +64,7 @@ const uploaded = new Map<string, ReconPackage>();
 const TABS: ReadonlyArray<{ id: ViewId; label: string; note: string }> = [
   { id: "findings", label: "Findings", note: "what the checks found" },
   { id: "recon", label: "Statement", note: "the landlord's reconciliation" },
+  { id: "lease", label: "Lease", note: "the clauses the checks read" },
 ];
 
 function allPackages(): ReconPackage[] {
@@ -69,6 +79,7 @@ function pick(id: string, scrollTo = true): void {
   state.view = "findings";
   state.highlight = null;
   state.findingFilter = null;
+  state.flashRef = null;
   rescan();
   renderAll();
   if (pkg && scrollTo) $("summary").scrollIntoView({ block: "start" });
@@ -79,12 +90,14 @@ function rescan(): void {
   if (!state.pkg) {
     state.result = null;
     state.model = null;
+    state.doc = null;
     return;
   }
   const t0 = performance.now();
   state.result = scan(state.pkg, state.config);
   const ms = performance.now() - t0;
   state.model = buildReconModel(state.pkg, state.result);
+  state.doc = buildLeaseDoc(state.pkg);
   $("build-info").textContent = `Last scan: ${state.pkg.meta.package_id}, ${state.result.findings.length} findings in ${ms.toFixed(1)} ms. ${import.meta.env.DEV ? "dev build" : "production build"}.`;
 }
 
@@ -98,8 +111,16 @@ function rowKeyIndex(): Map<string, string[]> {
 
 function setView(view: ViewId): void {
   state.view = view;
+  if (view !== "lease") state.flashRef = null;
   renderAll();
-  $(view === "recon" ? "recon" : "findings").scrollIntoView({ block: "start" });
+  $(view).scrollIntoView({ block: "start" });
+}
+
+function cite(ref: string): void {
+  state.view = "lease";
+  state.flashRef = ref;
+  renderAll();
+  (document.getElementById(anchorFor(ref)) ?? $("lease")).scrollIntoView({ block: "center" });
 }
 
 function showInStatement(f: Finding): void {
@@ -135,17 +156,20 @@ function renderAll(): void {
   const summary = $("summary");
   const findings = $("findings");
   const recon = $("recon");
+  const lease = $("lease");
   const tabs = $("view-tabs");
-  if (!state.result || !state.pkg || !state.model) {
+  if (!state.result || !state.pkg || !state.model || !state.doc) {
     summary.hidden = true;
     findings.hidden = true;
     recon.hidden = true;
+    lease.hidden = true;
     tabs.hidden = true;
     return;
   }
   summary.hidden = false;
   findings.hidden = state.view !== "findings";
   recon.hidden = state.view !== "recon";
+  lease.hidden = state.view !== "lease";
   tabs.hidden = false;
   clear(tabs);
   tabs.append(...renderViewTabs(state.view, TABS, setView));
@@ -177,6 +201,11 @@ function renderAll(): void {
       },
     }),
   );
+
+  // --- lease view
+  const lb = $("lease-body");
+  clear(lb);
+  lb.append(renderLeaseDoc(state.doc, { flashRef: state.flashRef }));
 
   // --- findings view
   const filterNote = $("findings-filter");
@@ -213,6 +242,7 @@ function renderAll(): void {
       {
         canShowInStatement: (f) => (index.get(f.id) ?? []).length > 0,
         onShowInStatement: showInStatement,
+        onCite: cite,
       },
       shown,
     ),
