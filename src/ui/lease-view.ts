@@ -91,6 +91,7 @@ function renderSection(s: LeaseSection, opts: LeaseViewOptions): HTMLElement {
           "button",
           {
             type: "button",
+            id: `clause-${s.clause}`,
             class: `clause-btn${s.clauseOn ? " strike" : " add"}`,
             onClick: () => opts.onClause!(s.clause!, !s.clauseOn),
           },
@@ -129,7 +130,7 @@ function renderToolbar(opts: LeaseViewOptions): HTMLElement | null {
     { class: "lease-toolbar" },
     h(
       "button",
-      { type: "button", class: opts.editing ? "primary-btn" : "ghost-btn", "aria-pressed": String(!!opts.editing), onClick: () => opts.onToggleEdit!(!opts.editing) },
+      { type: "button", id: "lease-edit-toggle", class: opts.editing ? "primary-btn" : "ghost-btn", "aria-pressed": String(!!opts.editing), onClick: () => opts.onToggleEdit!(!opts.editing) },
       opts.editing ? "Done editing" : "Edit this lease",
     ),
     opts.edited

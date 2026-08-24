@@ -149,7 +149,8 @@ function renderKeepingPlace(): void {
     if (el instanceof HTMLDetailsElement) el.open = true;
   }
   if (focusId) document.getElementById(focusId)?.focus();
-  window.scrollTo({ top: y });
+  // "auto" overrides the page's smooth scrolling: this is a redraw, not a jump.
+  window.scrollTo({ top: y, behavior: "auto" });
 }
 
 function editLease(mutate: (l: LeaseLite) => void): void {
