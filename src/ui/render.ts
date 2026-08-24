@@ -1,6 +1,8 @@
 import type { Finding, ReconPackage, ScanConfig, ScanResult, Severity } from "../engine/types.ts";
 import { CHECK_CATALOG } from "../engine/registry.ts";
 import { anchorFor, CLAUSE_FOR_CHECK, SECTION_TITLE } from "../lease/sections.ts";
+import type { ScanDiff } from "./scan-diff.ts";
+import { diffIsEmpty } from "./scan-diff.ts";
 import { h } from "./dom.ts";
 import { findingToText, money, moneyCompact, SEVERITY_ICON, SEVERITY_LABEL, yearText } from "./format.ts";
 
@@ -42,14 +44,36 @@ export function renderPicker(
 // Summary band: stat tiles + severity-by-check strip
 // ---------------------------------------------------------------------------
 
-export function renderSummary(r: ScanResult, pkg: ReconPackage): HTMLElement {
-  const impactTile = h(
-    "div",
-    { class: "tile tile-hero" },
-    h("span", { class: "tile-label" }, "Estimated tenant impact"),
-    h("span", { class: "tile-value num" }, moneyCompact(r.totals.estimated_impact_usd)),
-    h("span", { class: "tile-note" }, r.totals.estimated_impact_usd > 0 ? `${money(r.totals.estimated_impact_usd)} — sum of quantified findings; estimated, not settled` : "no quantified overcharge"),
-  );
+export function renderSummary(r: ScanResult, pkg: ReconPackage, diff?: ScanDiff | null): HTMLElement {
+  const impact = r.totals.estimated_impact_usd;
+  const delta = diff ? diff.currentImpact - diff.baselineImpact : 0;
+  const impactTile = diff
+    ? h(
+        "div",
+        { class: "tile tile-hero tile-diff" },
+        h("span", { class: "tile-label" }, "Estimated tenant impact — redlined lease"),
+        h(
+          "span",
+          { class: "tile-value num" },
+          h("span", { class: "was" }, moneyCompact(diff.baselineImpact)),
+          h("span", { class: "arrow", "aria-hidden": "true" }, "→"),
+          h("span", {}, moneyCompact(diff.currentImpact)),
+        ),
+        h(
+          "span",
+          { class: "tile-note" },
+          delta === 0
+            ? `${money(impact)} — unchanged from the signed lease`
+            : `${money(Math.abs(delta))} ${delta < 0 ? "less" : "more"} than the signed lease (${money(diff.baselineImpact)} → ${money(diff.currentImpact)})`,
+        ),
+      )
+    : h(
+        "div",
+        { class: "tile tile-hero" },
+        h("span", { class: "tile-label" }, "Estimated tenant impact"),
+        h("span", { class: "tile-value num" }, moneyCompact(impact)),
+        h("span", { class: "tile-note" }, impact > 0 ? `${money(impact)} — sum of quantified findings; estimated, not settled` : "no quantified overcharge"),
+      );
   const sevTile = (sev: Severity, label: string, n: number, note: string) =>
     h(
       "div",
@@ -147,6 +171,8 @@ export interface FindingsOptions {
   onShowInStatement?: (f: Finding) => void;
   /** Jump the reader to a clause of the model lease. */
   onCite?: (ref: string) => void;
+  /** Findings the redlined lease brought into existence. */
+  newIds?: ReadonlySet<string>;
 }
 
 /** The clause a check argues from — first ref is the chip, the rest the tooltip. */
@@ -187,6 +213,7 @@ function renderFinding(f: Finding, pkg: ReconPackage, allIds: Set<string>, opts:
     "span",
     { class: "f-meta" },
     chip,
+    opts.newIds?.has(f.id) ? h("span", { class: "chip chip-new" }, "New") : null,
     h("span", { class: "chip-check" }, f.check_id),
     cite,
     h("span", {}, yearText(f.year)),
@@ -258,6 +285,80 @@ function renderFinding(f: Finding, pkg: ReconPackage, allIds: Set<string>, opts:
 
 export function cssId(s: string): string {
   return s.replace(/[^a-zA-Z0-9_-]/g, "_");
+}
+
+// ---------------------------------------------------------------------------
+// What the redline changed
+// ---------------------------------------------------------------------------
+
+function findingLine(f: Finding): HTMLElement {
+  return h(
+    "li",
+    {},
+    h("code", {}, f.check_id),
+    ` ${yearText(f.year)} — ${f.title}`,
+    f.tenant_impact_usd !== undefined ? h("span", { class: "diff-amt num" }, money(f.tenant_impact_usd)) : null,
+  );
+}
+
+/** The explicit diff: what a redline resolved, what it created, what it silenced. */
+export function renderDiffPanel(diff: ScanDiff, onReset?: () => void): HTMLElement | null {
+  const counts: string[] = [];
+  if (diff.resolved.length) counts.push(`${diff.resolved.length} resolved`);
+  if (diff.added.length) counts.push(`${diff.added.length} new`);
+  if (diff.changed.length) counts.push(`${diff.changed.length} changed`);
+  if (diff.skipsGained.length) counts.push(`${diff.skipsGained.length} check${diff.skipsGained.length === 1 ? "" : "s"} no longer run`);
+  if (diff.checksGained.length) counts.push(`${diff.checksGained.length} check${diff.checksGained.length === 1 ? "" : "s"} now run`);
+
+  const head = h(
+    "summary",
+    {},
+    h("span", { class: "diff-h" }, "What the redline changed"),
+    h("span", { class: "diff-counts" }, diffIsEmpty(diff) ? "nothing — the report is the same under both leases" : counts.join(" · ")),
+  );
+
+  const body = h("div", { class: "diff-body" });
+  if (diff.resolved.length) {
+    body.append(h("p", { class: "diff-label" }, "Resolved — raised against the signed lease, not against this one"), h("ul", {}, ...diff.resolved.map(findingLine)));
+  }
+  if (diff.added.length) {
+    body.append(h("p", { class: "diff-label" }, "New — this lease creates them"), h("ul", {}, ...diff.added.map(findingLine)));
+  }
+  if (diff.changed.length) {
+    body.append(
+      h("p", { class: "diff-label" }, "Repriced"),
+      h(
+        "ul",
+        {},
+        ...diff.changed.map(({ before, after }) =>
+          h(
+            "li",
+            {},
+            h("code", {}, after.check_id),
+            ` ${yearText(after.year)} — ${after.title}: `,
+            h("span", { class: "num" }, before.tenant_impact_usd !== undefined ? money(before.tenant_impact_usd) : SEVERITY_LABEL[before.severity]),
+            " → ",
+            h("span", { class: "num" }, after.tenant_impact_usd !== undefined ? money(after.tenant_impact_usd) : SEVERITY_LABEL[after.severity]),
+          ),
+        ),
+      ),
+    );
+  }
+  if (diff.skipsGained.length) {
+    body.append(
+      h("p", { class: "diff-label" }, "Silenced — the clause these checks read is gone"),
+      h("ul", {}, ...diff.skipsGained.map((s) => h("li", {}, h("code", {}, s.check_id), ` no longer runs — ${s.reason}`))),
+    );
+  }
+  if (diff.checksGained.length) {
+    body.append(
+      h("p", { class: "diff-label" }, "Now testable — this lease gives these checks something to read"),
+      h("ul", {}, ...diff.checksGained.map((id) => h("li", {}, h("code", {}, id), " now runs"))),
+    );
+  }
+  if (onReset) body.append(h("div", { class: "config-actions" }, h("button", { type: "button", class: "ghost-btn", onClick: onReset }, "Reset to signed lease")));
+
+  return h("details", { class: "diff-panel", open: true }, head, body);
 }
 
 export function renderSkips(r: ScanResult): HTMLElement | null {

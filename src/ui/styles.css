@@ -265,6 +265,38 @@ td.rt-gap .rt-val { color: var(--ink-faint); }
 .chip-clause { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; color: var(--accent); text-decoration: none; border: 1px solid var(--rule-strong); border-radius: 2px; padding: 1px 6px; white-space: nowrap; }
 .chip-clause:hover { border-color: var(--accent); background: var(--accent-soft); }
 
+/* ---- lease designer ---- */
+.lease-toolbar { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; margin-bottom: 16px; }
+.edited-pill { display: inline-flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; font-size: 0.78rem; color: var(--review-ink); background: var(--review-soft); border: 1px solid var(--review); border-radius: 2px; padding: 5px 10px; }
+.lease-doc.editing .lease-section { border-left: 2px solid var(--rule); }
+.lease-doc.editing .lease-section.absent { border-left-color: var(--rule-strong); border-left-style: dashed; }
+.param-wrap { display: inline-flex; align-items: baseline; gap: 2px; }
+.param-unit { font-size: 0.8rem; color: var(--ink-muted); }
+.param-edit {
+  font-family: var(--font-mono); font-size: 0.84rem; display: inline-block; width: auto; padding: 1px 5px;
+  border: 1px solid var(--accent); border-radius: 2px; background: var(--accent-soft); color: var(--ink);
+}
+select.param-edit { font-family: var(--font-sans); max-width: 100%; }
+.clause-btn { margin-top: 4px; justify-self: start; font-size: 0.76rem; cursor: pointer; background: var(--surface); border: 1px solid var(--rule-strong); border-radius: 2px; padding: 4px 10px; }
+.clause-btn.strike { color: var(--high-ink); border-color: var(--high); }
+.clause-btn.add { color: var(--accent); border-color: var(--accent); }
+.clause-btn:hover { background: var(--surface-sunk); }
+
+/* ---- the redline diff ---- */
+.tile-diff .tile-value { flex-wrap: wrap; font-size: clamp(1.3rem, 2.4vw, 1.8rem); }
+.tile-diff .was { color: var(--ink-faint); text-decoration: line-through; text-decoration-thickness: 1px; }
+.tile-diff .arrow { color: var(--ink-faint); }
+.chip.chip-new { color: var(--ok); border-color: var(--ok); background: transparent; }
+.diff-panel { background: var(--surface); border: 1px solid var(--accent); border-radius: 3px; box-shadow: var(--shadow); }
+.diff-panel summary { cursor: pointer; padding: 10px 14px; display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+.diff-panel .diff-h { font-weight: 600; font-size: 0.92rem; }
+.diff-panel .diff-counts { font-size: 0.8rem; color: var(--ink-muted); }
+.diff-body { padding: 4px 14px 14px; display: grid; gap: 8px; border-top: 1px solid var(--rule); font-size: 0.84rem; }
+.diff-label { margin: 8px 0 0; font-size: 0.7rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-muted); font-weight: 600; }
+.diff-body ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+.diff-body code { font-family: var(--font-mono); font-size: 0.9em; color: var(--ink-muted); }
+.diff-amt { margin-left: 8px; color: var(--ink-muted); }
+
 .filter-note { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; justify-content: space-between; font-size: 0.82rem; color: var(--ink-muted); background: var(--surface); border: 1px solid var(--rule); border-radius: 2px; padding: 8px 12px; }
 .f-actions { display: inline-flex; gap: 8px; flex-wrap: wrap; }
 

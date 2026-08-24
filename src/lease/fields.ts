@@ -339,3 +339,94 @@ export function fieldById(id: FieldId): FieldDescriptor | undefined {
 export function feeFields(i: number): FieldDescriptor[] {
   return [FEE_PROPS.rate_pct(i), FEE_PROPS.kind(i), FEE_PROPS.base(i)];
 }
+
+// ---------------------------------------------------------------------------
+// Striking and adding whole clauses
+// ---------------------------------------------------------------------------
+
+/** What the designer knows about the statement when it drafts a fresh clause. */
+export interface ClauseHint {
+  sharePct?: number;
+  baseYear?: number;
+  baseAmount?: number;
+}
+
+/**
+ * Drafting defaults for a clause the lease does not have — the same starting
+ * terms the upload form offers, so a lease built here and a lease typed there
+ * are the same kind of document.
+ */
+export const CLAUSE_DEFAULTS: Record<ClauseId, (l: LeaseLite, hint?: ClauseHint) => void> = {
+  cap: (l, hint) => {
+    l.cap = {
+      applies_to: "controllable",
+      pct: 5,
+      method: "non_cumulative",
+      basis: "amount_paid",
+      fee_treatment: "outside_cap",
+      ...(hint?.baseYear !== undefined ? { base_year: hint.baseYear } : {}),
+      ...(hint?.baseAmount !== undefined ? { base_year_amount: hint.baseAmount } : {}),
+    };
+  },
+  fee: (l) => {
+    l.fees = [{ kind: "management", rate_pct: 3, base: "cam_only" }];
+  },
+  gross_up: (l) => {
+    l.gross_up = { allowed: true, to_pct: 95 };
+  },
+  capital: (l) => {
+    l.capital_threshold = 5000;
+    l.capital_life_years = 10;
+  },
+  stated_share: (l, hint) => {
+    l.share.stated_pct = hint?.sharePct !== undefined ? Number(hint.sharePct.toFixed(4)) : 10;
+  },
+};
+
+/** Striking a clause. `fees` is emptied, never deleted — the engine requires the array. */
+export const CLAUSE_REMOVE: Record<ClauseId, (l: LeaseLite) => void> = {
+  cap: (l) => {
+    delete l.cap;
+  },
+  fee: (l) => {
+    l.fees = [];
+  },
+  gross_up: (l) => {
+    delete l.gross_up;
+  },
+  capital: (l) => {
+    delete l.capital_threshold;
+    delete l.capital_life_years;
+  },
+  stated_share: (l) => {
+    delete l.share.stated_pct;
+  },
+};
+
+export const CLAUSE_LABEL: Record<ClauseId, string> = {
+  cap: "the cap on increases",
+  fee: "the management fee",
+  gross_up: "the gross-up right",
+  capital: "the capital and amortization terms",
+  stated_share: "the fixed Proportionate Share",
+};
+
+/** A working copy. The authored package's abstract is never handed to an editor. */
+export function cloneLease(l: LeaseLite): LeaseLite {
+  return structuredClone(l);
+}
+
+function stable(v: unknown): unknown {
+  if (Array.isArray(v)) return v.map(stable);
+  if (v && typeof v === "object") {
+    const out: Record<string, unknown> = {};
+    for (const k of Object.keys(v as object).sort()) out[k] = stable((v as Record<string, unknown>)[k]);
+    return out;
+  }
+  return v;
+}
+
+/** Value equality, insensitive to the order keys happen to sit in. */
+export function leaseEquals(a: LeaseLite, b: LeaseLite): boolean {
+  return JSON.stringify(stable(a)) === JSON.stringify(stable(b));
+}
