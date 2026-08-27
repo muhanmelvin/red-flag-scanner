@@ -19,6 +19,24 @@
   </head>
   <body>
     <a class="skip-link" href="#findings">Skip to findings</a>
+
+    <!-- ══ SITE NAV — keep this block identical across every app ══════════════
+         Plain links, no shared JS, no build-time dependency between repos.
+         When you change it, change it in all of them.
+         Uncomment an app only once it is actually live — a link to a subdomain
+         with no site behind it is a visible bug on every page that carries this
+         header. Add aria-current="page" to this app's own link. -->
+    <nav class="site-nav" aria-label="Other tools">
+      <a class="site-brand" href="https://petriumalpha.com/">Melvin Muhan</a>
+      <ul class="site-nav-list">
+        <li><a href="https://scanner.petriumalpha.com/" aria-current="page">Red-Flag Scanner</a></li>
+        <!-- <li><a href="https://captrap.petriumalpha.com/">Cap Trap Explorer</a></li> -->
+        <!-- <li><a href="https://interpreter.petriumalpha.com/">Lease Interpreter</a></li> -->
+        <!-- <li><a href="https://deadlines.petriumalpha.com/">Deadline Calculator</a></li> -->
+      </ul>
+    </nav>
+    <!-- ══ end site nav ══════════════════════════════════════════════════════ -->
+
     <header class="masthead">
       <div class="wrap masthead-inner">
         <p class="eyebrow">Recon Forensics · Red-Flag Scanner</p>

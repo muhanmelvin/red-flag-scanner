@@ -6,9 +6,12 @@ A deterministic, browser-only checklist that ranks red flags in a landlord's ope
 
 **Live:** https://scanner.petriumalpha.com/ · **Single-file build:** `npm run build:single` → `dist-single/index.html` opens offline.
 
+<!-- Demo GIF: record ~15s at ~800px wide — pick MW-B, read the summary band,
+     expand the top finding, press Copy finding — save as docs/demo.gif, then
+     restore the image line below. Until it exists, do not commit the reference:
+     a 404 renders as a broken image on the repo front page.
 ![Sixty-second scan of the MW-B package](docs/demo.gif)
-
-_(GIF to record after the first deploy: pick **MW-B**, read the summary band, expand the top finding, press **Copy finding**.)_
+-->
 
 ---
 
