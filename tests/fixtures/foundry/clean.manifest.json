@@ -1,0 +1,60 @@
+{
+  "package_id": "ABP3-2023-clean",
+  "expected_high_min": 0,
+  "expected_total_findings": 0,
+  "expected_high": 0,
+  "ledger": {
+    "2023": {
+      "pool_actual": 222128.24,
+      "allowed_correct": 230499.4,
+      "paid_correct": 222128.24,
+      "billed": 222128.24,
+      "ll_allowed": 230499.4,
+      "fee_billed": 14429.92,
+      "fee_correct": 14429.92,
+      "tax_billed": 313945.74,
+      "tax_correct": 313945.74,
+      "capital_billed": 38441.09,
+      "capital_correct": 38441.09,
+      "tenant_billed": 91098.39,
+      "tenant_correct": 91098.39,
+      "tenant_excess": 0
+    },
+    "2024": {
+      "pool_actual": 224548.06,
+      "allowed_correct": 235455.93,
+      "paid_correct": 224548.06,
+      "billed": 224548.06,
+      "ll_allowed": 235455.93,
+      "fee_billed": 14673.1,
+      "fee_correct": 14673.1,
+      "tax_billed": 330373.08,
+      "tax_correct": 330373.08,
+      "capital_billed": 36790.67,
+      "capital_correct": 36790.67,
+      "tenant_billed": 94069.42,
+      "tenant_correct": 94069.42,
+      "tenant_excess": 0
+    },
+    "2025": {
+      "pool_actual": 229010.54,
+      "allowed_correct": 238020.94,
+      "paid_correct": 229010.54,
+      "billed": 229010.54,
+      "ll_allowed": 238020.94,
+      "fee_billed": 14963.09,
+      "fee_correct": 14963.09,
+      "tax_billed": 343866.59,
+      "tax_correct": 343866.59,
+      "capital_billed": 35140.24,
+      "capital_correct": 35140.24,
+      "tenant_billed": 96750.82,
+      "tenant_correct": 96750.82,
+      "tenant_excess": 0
+    }
+  },
+  "findings": [],
+  "cofires": [],
+  "total_planted_tenant_impact": 0,
+  "document_only_findings": 0
+}

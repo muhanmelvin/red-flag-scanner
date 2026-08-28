@@ -5,6 +5,7 @@ import type { ScanDiff } from "./scan-diff.ts";
 import { diffIsEmpty } from "./scan-diff.ts";
 import { h } from "./dom.ts";
 import { findingToText, money, moneyCompact, SEVERITY_ICON, SEVERITY_LABEL, yearText } from "./format.ts";
+import { foundryUrl } from "./foundry-link.ts";
 
 // ---------------------------------------------------------------------------
 // Package picker
@@ -17,7 +18,7 @@ export function renderPicker(
   onUpload: () => void,
   uploadOpen: boolean,
 ): HTMLElement[] {
-  const cards = packages.map((p) =>
+  const cards: HTMLElement[] = packages.map((p) =>
     h(
       "button",
       { type: "button", class: "card", "aria-pressed": String(p.meta.package_id === selectedId), onClick: () => onPick(p.meta.package_id) },
@@ -35,6 +36,17 @@ export function renderPicker(
       h("h3", {}, "Upload your own"),
       h("p", {}, "An XLSX or CSV statement in wide format (one label column, one amount column per year). Parsed and scanned in this page — never uploaded anywhere."),
       h("span", { class: "card-meta" }, ".xlsx · .xls · .csv · or a JSON package"),
+    ),
+  );
+  // Spans the grid, under the cards. It is a link and lives outside the upload
+  // card because an anchor inside a button is neither valid nor operable.
+  cards.push(
+    h(
+      "p",
+      { class: "picker-note" },
+      "No file you can put in a browser? ",
+      h("a", { href: foundryUrl(), target: "_blank", rel: "noopener noreferrer" }, "Forge a synthetic package with Recon Foundry ↗"),
+      " — a whole reconciliation for an invented property, with a JSON file in this scanner's own shape. Download it there, upload it here.",
     ),
   );
   return cards;

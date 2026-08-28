@@ -1,0 +1,371 @@
+{
+  "meta": {
+    "package_id": "NCC8-2022-2",
+    "property_name": "Norwood Corporate Center",
+    "tenant_name": "Lindquist Diagnostics",
+    "premises_sf": 41000,
+    "currency": "USD",
+    "schema_version": "1.0",
+    "story": "Forged with the cap grown on the cap and a controllable cost moved out of the capped pool. Every other figure in the package ties."
+  },
+  "lease_lite": {
+    "share": {
+      "numerator_sf": 41000,
+      "denominator_basis": "GLA"
+    },
+    "cap": {
+      "applies_to": "controllable",
+      "pct": 5,
+      "method": "non_cumulative",
+      "basis": "amount_paid",
+      "base_year": 2021,
+      "base_year_amount": 681833.61,
+      "fee_treatment": "outside_cap"
+    },
+    "fees": [
+      {
+        "kind": "management",
+        "rate_pct": 4.3,
+        "base": "cam_only"
+      }
+    ],
+    "capital_threshold": 25000,
+    "capital_life_years": 10,
+    "gross_up": {
+      "allowed": true,
+      "to_pct": 95
+    }
+  },
+  "years": [
+    {
+      "year": 2022,
+      "occupancy_pct": 97.5,
+      "denominator_sf": 419500,
+      "lines": [
+        {
+          "label": "Landscaping & grounds",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 59404.18
+        },
+        {
+          "label": "Janitorial — common areas",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 233700.21
+        },
+        {
+          "label": "Mechanical systems maintenance",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 91330.87
+        },
+        {
+          "label": "Elevator maintenance",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 66770.99
+        },
+        {
+          "label": "Security patrol",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 108464.5
+        },
+        {
+          "label": "Repairs & maintenance",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 109804.88
+        },
+        {
+          "label": "Fire & life safety inspections",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 24677.32
+        },
+        {
+          "label": "Common area lighting — electricity",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 164636.62
+        },
+        {
+          "label": "Water & sewer — common areas",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 39436.32
+        },
+        {
+          "label": "Snow removal",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 30159.59
+        },
+        {
+          "label": "Amortization of building systems (yr 2 of 10)",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 92697.85,
+          "capital": {
+            "total_cost": 544214.4,
+            "useful_life_months": 120,
+            "interest_rate_pct": 8,
+            "in_service": "2021-04-01"
+          }
+        },
+        {
+          "label": "Real estate taxes",
+          "section": "Taxes",
+          "bucket": "non_controllable",
+          "amount": 923132.68
+        },
+        {
+          "label": "Property insurance",
+          "section": "Insurance",
+          "bucket": "non_controllable",
+          "amount": 88516.04
+        },
+        {
+          "label": "Management fee (4.3%)",
+          "section": "Fees",
+          "bucket": "non_controllable",
+          "amount": 39920.58,
+          "is_fee": true
+        }
+      ],
+      "cap_summary": {
+        "pool_label": "Controllable CAM (subject to 5% cap)",
+        "pool_actual": 694152.95,
+        "pool_allowed": 715925.29,
+        "pool_billed": 694152.95
+      },
+      "tenant_summary": {
+        "pro_rata_share_pct": 9.7735,
+        "tenant_total": 202570.7,
+        "estimates_paid": 195265.8,
+        "balance_due": 7304.9
+      }
+    },
+    {
+      "year": 2023,
+      "occupancy_pct": 93.1,
+      "denominator_sf": 419500,
+      "lines": [
+        {
+          "label": "Landscaping & grounds",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 62463.2
+        },
+        {
+          "label": "Janitorial — common areas",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 228794.77
+        },
+        {
+          "label": "Mechanical systems maintenance",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 97771.4
+        },
+        {
+          "label": "Elevator maintenance",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 69071.55
+        },
+        {
+          "label": "Security patrol",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 106666.82
+        },
+        {
+          "label": "Repairs & maintenance",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 111078.41
+        },
+        {
+          "label": "Fire & life safety inspections",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 26270.05
+        },
+        {
+          "label": "Common area lighting — electricity",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 165374.33
+        },
+        {
+          "label": "Water & sewer — common areas",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 43184.1
+        },
+        {
+          "label": "Snow removal",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 33007.55
+        },
+        {
+          "label": "Amortization of building systems (yr 3 of 10)",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 88344.14,
+          "capital": {
+            "total_cost": 544214.4,
+            "useful_life_months": 120,
+            "interest_rate_pct": 8,
+            "in_service": "2021-04-01"
+          }
+        },
+        {
+          "label": "Real estate taxes",
+          "section": "Taxes",
+          "bucket": "non_controllable",
+          "amount": 949216.8
+        },
+        {
+          "label": "Property insurance",
+          "section": "Insurance",
+          "bucket": "non_controllable",
+          "amount": 93100.78
+        },
+        {
+          "label": "Management fee (4.3%)",
+          "section": "Fees",
+          "bucket": "non_controllable",
+          "amount": 40578.33,
+          "is_fee": true
+        }
+      ],
+      "cap_summary": {
+        "pool_label": "Controllable CAM (subject to 5% cap)",
+        "pool_actual": 702116.2,
+        "pool_allowed": 728860.6,
+        "pool_billed": 728860.6
+      },
+      "tenant_summary": {
+        "pro_rata_share_pct": 9.7735,
+        "tenant_total": 209315.79,
+        "estimates_paid": 202475.28,
+        "balance_due": 6840.51
+      }
+    },
+    {
+      "year": 2024,
+      "occupancy_pct": 93.4,
+      "denominator_sf": 419500,
+      "lines": [
+        {
+          "label": "Landscaping & grounds",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 66640.72
+        },
+        {
+          "label": "Building services — sanitation contract",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 258538.09
+        },
+        {
+          "label": "Mechanical systems maintenance",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 101679.01
+        },
+        {
+          "label": "Elevator maintenance",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 74602.22
+        },
+        {
+          "label": "Security patrol",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 115787.47
+        },
+        {
+          "label": "Repairs & maintenance",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 94626.61
+        },
+        {
+          "label": "Fire & life safety inspections",
+          "section": "CAM",
+          "bucket": "controllable",
+          "amount": 29446.03
+        },
+        {
+          "label": "Common area lighting — electricity",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 167854.04
+        },
+        {
+          "label": "Water & sewer — common areas",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 46411.69
+        },
+        {
+          "label": "Snow removal",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 35004.54
+        },
+        {
+          "label": "Amortization of building systems (yr 4 of 10)",
+          "section": "CAM",
+          "bucket": "non_controllable",
+          "amount": 83990.42,
+          "capital": {
+            "total_cost": 544214.4,
+            "useful_life_months": 120,
+            "interest_rate_pct": 8,
+            "in_service": "2021-04-01"
+          }
+        },
+        {
+          "label": "Real estate taxes",
+          "section": "Taxes",
+          "bucket": "non_controllable",
+          "amount": 983767.35
+        },
+        {
+          "label": "Property insurance",
+          "section": "Insurance",
+          "bucket": "non_controllable",
+          "amount": 97055.98
+        },
+        {
+          "label": "Management fee (4.3%)",
+          "section": "Fees",
+          "bucket": "non_controllable",
+          "amount": 42595.39,
+          "is_fee": true
+        }
+      ],
+      "cap_summary": {
+        "pool_label": "Controllable CAM (subject to 5% cap)",
+        "pool_actual": 482782.06,
+        "pool_allowed": 765303.63,
+        "pool_billed": 765303.63
+      },
+      "tenant_summary": {
+        "pro_rata_share_pct": 9.7735,
+        "tenant_total": 242433.73,
+        "estimates_paid": 196956,
+        "balance_due": 45477.73
+      }
+    }
+  ]
+}

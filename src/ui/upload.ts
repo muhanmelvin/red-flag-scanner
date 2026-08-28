@@ -5,8 +5,10 @@
 
 import type { Bucket, ReconPackage } from "../engine/types.ts";
 import { scan } from "../engine/scan.ts";
+import { packageById } from "../data/index.ts";
 import { h, clear } from "./dom.ts";
 import type { ColumnGuess, DraftLine, LeaseForm, ParsedSheet } from "../ingest/parse.ts";
+import { foundryUrl } from "./foundry-link.ts";
 
 // SheetJS is ~400 kB; load the ingest module only when someone actually uploads.
 type Ingest = typeof import("../ingest/parse.ts");
@@ -33,6 +35,23 @@ interface UploadState {
 
 const BASE = import.meta.env.BASE_URL;
 
+/**
+ * The id an uploaded package will be filed under.
+ *
+ * An uploaded package keeps the name it came with — a forged package is called
+ * something, and a card reading "UPLOAD" throws that away. The one thing it may
+ * not do is take a shipped package's id: `pick()` resolves the authored three
+ * first, so a collision would quietly show MW-B when you asked for your own
+ * file. That is worth a suffix and not worth a dialog.
+ */
+function uploadId(raw: string | undefined): string {
+  const base = (raw ?? "").trim() || "UPLOAD";
+  if (!packageById(base)) return base;
+  let n = 2;
+  while (packageById(`${base}-${n}`)) n++;
+  return `${base}-${n}`;
+}
+
 export function mountUploadPanel(container: HTMLElement, onPackage: (pkg: ReconPackage) => void): void {
   const st: UploadState = {
     step: "idle", filename: "", workbook: null, sheet: null, columns: [], lines: null, lineWarnings: [], error: null,
@@ -46,9 +65,20 @@ export function mountUploadPanel(container: HTMLElement, onPackage: (pkg: ReconP
     try {
       if (/\.json$/i.test(file.name)) {
         const text = await file.text();
-        const pkg = JSON.parse(text) as ReconPackage;
-        scan(pkg); // throws with a message on malformed shape
-        onPackage({ ...pkg, meta: { ...pkg.meta, package_id: pkg.meta.package_id || "UPLOAD" } });
+        let pkg: ReconPackage;
+        try {
+          pkg = JSON.parse(text) as ReconPackage;
+        } catch {
+          throw new Error("that file is not valid JSON. A recon package is a .json file in the canonical schema — Recon Foundry writes one into every package it forges, in the “_ANSWER KEY” folder.");
+        }
+        try {
+          scan(pkg); // the only gate: it throws with a message on a malformed shape
+        } catch (err) {
+          throw new Error(`that JSON is not a recon package in the canonical schema (${(err as Error).message}). Expected the ReconPackage file from Recon Foundry, or a file matching schema/recon-package.schema.json.`);
+        }
+        // A forged package arrives with a name of its own, and it keeps it: the
+        // card should say which property was scanned, not "UPLOAD".
+        onPackage({ ...pkg, meta: { ...pkg.meta, package_id: uploadId(pkg.meta?.package_id) } });
         st.step = "idle";
         render();
         return;
@@ -97,7 +127,17 @@ export function mountUploadPanel(container: HTMLElement, onPackage: (pkg: ReconP
       renderDrop(),
     );
     if (st.step === "error" && st.error) {
-      container.append(h("div", { class: "error" }, st.error, " ", h("a", { href: `${BASE}template.xlsx`, download: "recon-template.xlsx" }, "Download the template")));
+      container.append(
+        h(
+          "div",
+          { class: "error" },
+          st.error,
+          " ",
+          h("a", { href: `${BASE}template.xlsx`, download: "recon-template.xlsx" }, "Download the template"),
+          " · ",
+          h("a", { href: foundryUrl(), target: "_blank", rel: "noopener noreferrer" }, "forge a package with Recon Foundry"),
+        ),
+      );
     }
     if (st.step === "map" && st.sheet) {
       container.append(renderMapping(), renderPreview(), renderLeaseForm(), renderActions());
@@ -112,7 +152,7 @@ export function mountUploadPanel(container: HTMLElement, onPackage: (pkg: ReconP
       { class: "drop" },
       h("span", {}, st.filename ? `Loaded: ${st.filename}` : "Drop an .xlsx, .xls or .csv here, or choose a file"),
       input,
-      h("p", { class: "hint" }, "Wide format works best: one label column, one amount column per year headed by the year. Section header rows (e.g. “Controllable CAM”) are understood. ", h("a", { href: `${BASE}template.xlsx`, download: "recon-template.xlsx" }, "Download the template (.xlsx)"), " · ", h("a", { href: `${BASE}template.csv`, download: "recon-template.csv" }, "CSV"), " · a JSON package in the canonical schema also works."),
+      h("p", { class: "hint" }, "Wide format works best: one label column, one amount column per year headed by the year. Section header rows (e.g. “Controllable CAM”) are understood. ", h("a", { href: `${BASE}template.xlsx`, download: "recon-template.xlsx" }, "Download the template (.xlsx)"), " · ", h("a", { href: `${BASE}template.csv`, download: "recon-template.csv" }, "CSV"), " · a JSON package in the canonical schema also works — ", h("a", { href: foundryUrl(), target: "_blank", rel: "noopener noreferrer" }, "Recon Foundry"), " forges one, and a JSON package carries the cap computation, capital blocks and subtotals a spreadsheet cannot."),
     );
     drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("over"); });
     drop.addEventListener("dragleave", () => drop.classList.remove("over"));

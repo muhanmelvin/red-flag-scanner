@@ -3,11 +3,29 @@ import Ajv from "ajv";
 import schema from "../schema/recon-package.schema.json";
 import { PACKAGES } from "../src/data/index.ts";
 
+// The forged fixtures validate too, and it matters more that they do: the
+// schema is the interchange contract, and Recon Foundry holds a byte-identical
+// copy of this file. See tests/foundry.test.ts.
+import cleanPackage from "./fixtures/foundry/clean.package.json";
+import capPackage from "./fixtures/foundry/cap-migration.package.json";
+import fivePackage from "./fixtures/foundry/all-five.package.json";
+
+const FORGED: ReadonlyArray<readonly [string, unknown]> = [
+  ["foundry clean", cleanPackage],
+  ["foundry cap-migration", capPackage],
+  ["foundry all-five", fivePackage],
+];
+
 const ajv = new Ajv({ allErrors: true, strict: true, multipleOfPrecision: 6 });
 const validate = ajv.compile(schema);
 
 describe("JSON schema", () => {
   it.each(PACKAGES.map((p) => [p.meta.package_id, p] as const))("%s validates against recon-package.schema.json", (_id, pkg) => {
+    const ok = validate(pkg);
+    expect(ok, JSON.stringify(validate.errors, null, 2)).toBe(true);
+  });
+
+  it.each(FORGED)("%s validates against recon-package.schema.json", (_name, pkg) => {
     const ok = validate(pkg);
     expect(ok, JSON.stringify(validate.errors, null, 2)).toBe(true);
   });

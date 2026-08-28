@@ -138,6 +138,10 @@ main { padding: 30px 0 56px; display: grid; gap: 34px; }
 .card p { margin: 0; font-size: 0.84rem; color: var(--ink-muted); line-height: 1.5; }
 .card-meta { font-size: 0.74rem; color: var(--ink-faint); }
 .card-upload { border-style: dashed; border-top-style: solid; }
+/* Spans the card grid, under the cards: the way in for someone with nothing to
+   upload. The sibling app forges a package in this scanner's own JSON shape. */
+.picker-note { grid-column: 1 / -1; margin: 0; font-size: 0.82rem; color: var(--ink-muted); line-height: 1.55; }
+.picker-note a { color: var(--accent); }
 
 /* ---- summary band ---- */
 .tiles { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
@@ -367,7 +371,7 @@ table.preview td.bucket-cell select { font-size: 0.76rem; padding: 2px 4px; }
   * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
 @media print {
-  .card, .ghost-btn, .copy-btn, .upload-panel, .skip-link, .site-nav { display: none !important; }
+  .card, .picker-note, .ghost-btn, .copy-btn, .upload-panel, .skip-link, .site-nav { display: none !important; }
   .finding { break-inside: avoid; }
   .finding[open] .f-body, .f-body { display: grid; }
 }

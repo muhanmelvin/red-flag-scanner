@@ -1,0 +1,145 @@
+{
+  "package_id": "BFC2-2023-5",
+  "expected_high_min": 5,
+  "ledger": {
+    "2023": {
+      "pool_actual": 104867.72,
+      "allowed_correct": 105767.68,
+      "paid_correct": 104867.72,
+      "billed": 104867.72,
+      "ll_allowed": 105767.68,
+      "fee_billed": 8798.53,
+      "fee_correct": 4445.71,
+      "tax_billed": 127870.24,
+      "tax_correct": 127870.24,
+      "capital_billed": 25765.92,
+      "capital_correct": 25765.92,
+      "tenant_billed": 23809.02,
+      "tenant_correct": 23492.91,
+      "tenant_excess": 316.11
+    },
+    "2024": {
+      "pool_actual": 106008.84,
+      "allowed_correct": 109062.43,
+      "paid_correct": 106008.84,
+      "billed": 109062.43,
+      "ll_allowed": 109062.43,
+      "fee_billed": 9011.06,
+      "fee_correct": 4513.22,
+      "tax_billed": 131647,
+      "tax_correct": 131647,
+      "capital_billed": 24961.78,
+      "capital_correct": 24961.78,
+      "tenant_billed": 24502.3,
+      "tenant_correct": 23953.9,
+      "tenant_excess": 548.4
+    },
+    "2025": {
+      "pool_actual": 86972.08,
+      "allowed_correct": 110249.19,
+      "paid_correct": 110249.19,
+      "billed": 113424.93,
+      "ll_allowed": 113424.93,
+      "fee_billed": 9472.8,
+      "fee_correct": 4766.06,
+      "tax_billed": 137190.09,
+      "tax_correct": 133658.2,
+      "capital_billed": 185973.13,
+      "capital_correct": 34945.35,
+      "tenant_billed": 39045.86,
+      "tenant_correct": 25305.83,
+      "tenant_excess": 13740.03
+    }
+  },
+  "findings": [
+    {
+      "check_id": "RF-09",
+      "year": 2025,
+      "category": "Parking lot resurfacing — trailer yard",
+      "severity": "review",
+      "expected_impact_range": [
+        10529,
+        11408
+      ],
+      "note": "Billed 161815.48; one instalment at the lease's 15-year life is 10787.7."
+    },
+    {
+      "check_id": "RF-06",
+      "year": 2024,
+      "category": "Controllable CAM (subject to 4% cap)",
+      "severity": "high",
+      "expected_impact_range": [
+        212,
+        232
+      ],
+      "materiality_sensitive": true,
+      "note": "Actual 106008.84; lease ceiling 109062.43; billed 109062.43."
+    },
+    {
+      "check_id": "RF-06",
+      "year": [
+        2023,
+        2025
+      ],
+      "category": "Capped pool",
+      "severity": "review",
+      "note": "The pattern finding, not a second charge: its dollars are already counted in the per-year entries."
+    },
+    {
+      "check_id": "RF-06",
+      "year": 2025,
+      "category": "Controllable CAM (subject to 4% cap)",
+      "severity": "high",
+      "expected_impact_range": [
+        1844,
+        1999
+      ],
+      "note": "Actual 86972.08; lease ceiling 110249.19; billed 113424.93."
+    },
+    {
+      "check_id": "RF-07",
+      "year": 2023,
+      "category": "Management fee (3%)",
+      "severity": "high",
+      "expected_impact_range": [
+        249,
+        272
+      ],
+      "materiality_sensitive": true,
+      "note": "Permitted base 148190.38; base actually used 293284.19."
+    },
+    {
+      "check_id": "RF-07",
+      "year": 2024,
+      "category": "Management fee (3%)",
+      "severity": "high",
+      "expected_impact_range": [
+        261,
+        285
+      ],
+      "note": "Permitted base 150440.79; base actually used 300368.58."
+    },
+    {
+      "check_id": "RF-04",
+      "year": [
+        2024,
+        2025
+      ],
+      "category": "Life safety & patrol services",
+      "severity": "high",
+      "expected_impact_range": [
+        242,
+        264
+      ],
+      "materiality_sensitive": true,
+      "note": "The move also shrinks the base next year's ceiling grows from, so it compounds."
+    }
+  ],
+  "cofires": [
+    "RF-01",
+    "RF-02",
+    "RF-03"
+  ],
+  "total_planted_tenant_impact": 14604.54,
+  "document_only_findings": 1
+}

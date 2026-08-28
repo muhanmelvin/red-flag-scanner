@@ -1,0 +1,109 @@
+{
+  "package_id": "NCC8-2022-2",
+  "expected_high_min": 3,
+  "ledger": {
+    "2022": {
+      "pool_actual": 694152.95,
+      "allowed_correct": 715925.29,
+      "paid_correct": 694152.95,
+      "billed": 694152.95,
+      "ll_allowed": 715925.29,
+      "fee_billed": 39920.58,
+      "fee_correct": 39920.58,
+      "tax_billed": 923132.68,
+      "tax_correct": 923132.68,
+      "capital_billed": 92697.85,
+      "capital_correct": 92697.85,
+      "tenant_billed": 202570.7,
+      "tenant_correct": 202570.7,
+      "tenant_excess": 0
+    },
+    "2023": {
+      "pool_actual": 702116.2,
+      "allowed_correct": 728860.6,
+      "paid_correct": 702116.2,
+      "billed": 728860.6,
+      "ll_allowed": 728860.6,
+      "fee_billed": 40578.33,
+      "fee_correct": 40578.33,
+      "tax_billed": 949216.8,
+      "tax_correct": 949216.8,
+      "capital_billed": 88344.14,
+      "capital_correct": 88344.14,
+      "tenant_billed": 209315.79,
+      "tenant_correct": 206701.92,
+      "tenant_excess": 2613.87
+    },
+    "2024": {
+      "pool_actual": 482782.06,
+      "allowed_correct": 737222.01,
+      "paid_correct": 737222.01,
+      "billed": 765303.63,
+      "ll_allowed": 765303.63,
+      "fee_billed": 42595.39,
+      "fee_correct": 42595.39,
+      "tax_billed": 983767.35,
+      "tax_correct": 983767.35,
+      "capital_billed": 83990.42,
+      "capital_correct": 83990.42,
+      "tenant_billed": 242433.73,
+      "tenant_correct": 214420.96,
+      "tenant_excess": 28012.77
+    }
+  },
+  "findings": [
+    {
+      "check_id": "RF-06",
+      "year": 2023,
+      "category": "Controllable CAM (subject to 5% cap)",
+      "severity": "high",
+      "expected_impact_range": [
+        2509,
+        2720
+      ],
+      "note": "Actual 702116.20; lease ceiling 728860.60; billed 728860.60."
+    },
+    {
+      "check_id": "RF-06",
+      "year": [
+        2022,
+        2024
+      ],
+      "category": "Capped pool",
+      "severity": "review",
+      "note": "The pattern finding, not a second charge: its dollars are already counted in the per-year entries."
+    },
+    {
+      "check_id": "RF-06",
+      "year": 2024,
+      "category": "Controllable CAM (subject to 5% cap)",
+      "severity": "high",
+      "expected_impact_range": [
+        26507,
+        28718
+      ],
+      "note": "Actual 482782.06; lease ceiling 737222.01; billed 765303.63."
+    },
+    {
+      "check_id": "RF-04",
+      "year": [
+        2023,
+        2024
+      ],
+      "category": "Building services — sanitation contract",
+      "severity": "high",
+      "expected_impact_range": [
+        384,
+        418
+      ],
+      "note": "The move also shrinks the base next year's ceiling grows from, so it compounds."
+    }
+  ],
+  "cofires": [
+    "RF-01",
+    "RF-02",
+    "RF-03"
+  ],
+  "total_planted_tenant_impact": 30626.64,
+  "document_only_findings": 0
+}
