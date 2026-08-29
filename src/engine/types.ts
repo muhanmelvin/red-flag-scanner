@@ -15,7 +15,7 @@ export interface ReconPackage {
     tenant_name: string; // synthetic only
     premises_sf: number;
     currency: "USD";
-    schema_version: "1.0";
+    schema_version: "1.0" | "1.1"; // 1.1 added ReconYear.tax_backup
     /** One-line story shown on the package card. Optional for uploads. */
     story?: string;
   };
@@ -45,6 +45,26 @@ export interface ReconYear {
     tenant_total?: number; // the landlord's total charge to the tenant
     estimates_paid?: number;
     balance_due?: number; // positive = tenant owes
+  };
+  /**
+   * The collector's account behind this year's tax lines (schema 1.1). A
+   * statement on its own cannot say a refund exists; this block is where that
+   * fact travels, and it is the only thing RF-13 can read. Absent means the
+   * producer has no tax backup — not that the taxes are clean.
+   */
+  tax_backup?: {
+    parcels: Array<{
+      parcel_id?: string;
+      /** The levy as issued — the year's installments, gross of any credit. */
+      billed: number;
+      /** Credits the collector granted in this recon year, whichever assessment year they relate to. */
+      credits?: Array<{
+        amount: number;
+        appeal_year?: number; // the year whose assessment was appealed
+        granted?: string; // ISO date
+        reference?: string; // docket or memo text
+      }>;
+    }>;
   };
 }
 

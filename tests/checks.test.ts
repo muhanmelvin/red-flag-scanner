@@ -362,6 +362,83 @@ describe("RF-12 identical amounts", () => {
   });
 });
 
+describe("RF-13 tax backup vs. statement", () => {
+  const TAX = (amount: number, label = "Real estate taxes") => L(label, amount, { section: "Taxes", bucket: "non_controllable" });
+  const BACKUP = (billed: number, credits?: Array<{ amount: number; appeal_year?: number; granted?: string; reference?: string }>) => ({
+    parcels: [{ parcel_id: "P-1", billed, ...(credits ? { credits } : {}) }],
+  });
+
+  it("flags a levy billed gross of a credit the backup shows", () => {
+    const r = scan(
+      P([Y(2024, [L("Landscaping", 20_000), TAX(100_000)], { tax_backup: BACKUP(100_000, [{ amount: 5_000, appeal_year: 2022, granted: "2024-07-09", reference: "AP-2023-4412" }]) })]),
+    );
+    const f = of(r, "RF-13");
+    expect(f).toHaveLength(1);
+    expect(f[0]!.severity).toBe("high");
+    expect(f[0]!.category).toBe("Real estate taxes");
+    expect(f[0]!.tenant_impact_usd).toBe(500); // $5,000 kept, at the 10% share
+    expect(f[0]!.narrative).toContain("AP-2023-4412");
+    expect(r.checks_run).toContain("RF-13");
+  });
+
+  it("nets every credit on every parcel, and names the largest tax line", () => {
+    const r = scan(
+      P([
+        Y(2024, [TAX(60_000, "Real estate taxes"), TAX(40_000, "Special assessments")], {
+          tax_backup: {
+            parcels: [
+              { parcel_id: "P-1", billed: 60_000, credits: [{ amount: 1_500 }, { amount: 500 }] },
+              { parcel_id: "P-2", billed: 40_000, credits: [{ amount: 2_000 }] },
+            ],
+          },
+        }),
+      ]),
+    );
+    const f = of(r, "RF-13");
+    expect(f).toHaveLength(1);
+    expect(f[0]!.tenant_impact_usd).toBe(400); // $4,000 of credits at 10%
+    expect(f[0]!.category).toBe("Real estate taxes");
+  });
+
+  it("is review, not high, when the statement exceeds the bills with no credit shown", () => {
+    const r = scan(P([Y(2024, [TAX(104_000)], { tax_backup: BACKUP(100_000) })]));
+    const f = of(r, "RF-13");
+    expect(f).toHaveLength(1);
+    expect(f[0]!.severity).toBe("review");
+    expect(f[0]!.tenant_impact_usd).toBe(400);
+  });
+
+  it("says nothing when the statement ties to the netted backup, or bills less", () => {
+    const tie = scan(P([Y(2024, [TAX(95_000)], { tax_backup: BACKUP(100_000, [{ amount: 5_000 }]) })]));
+    expect(of(tie, "RF-13")).toHaveLength(0);
+    expect(tie.checks_run).toContain("RF-13"); // ran and found nothing — not the same as never run
+    const under = scan(P([Y(2024, [TAX(90_000)], { tax_backup: BACKUP(100_000, [{ amount: 5_000 }]) })]));
+    expect(of(under, "RF-13")).toHaveLength(0);
+  });
+
+  it("ignores a year that carries backup but bills no taxes", () => {
+    const r = scan(P([Y(2024, [L("Landscaping", 20_000)], { tax_backup: BACKUP(100_000, [{ amount: 5_000 }]) })]));
+    expect(of(r, "RF-13")).toHaveLength(0);
+  });
+
+  it("omits the impact rather than guessing when the share is unknowable", () => {
+    const r = scan(
+      P([Y(2024, [TAX(100_000)], { denominator_sf: undefined, tenant_summary: undefined, tax_backup: BACKUP(100_000, [{ amount: 5_000 }]) })]),
+    );
+    const f = of(r, "RF-13");
+    expect(f).toHaveLength(1);
+    expect(f[0]!.tenant_impact_usd).toBeUndefined();
+    expect(f[0]!.severity).toBe("high");
+  });
+
+  it("skips — and says why — when no year carries tax backup", () => {
+    const r = scan(P([Y(2024, [TAX(100_000)])]));
+    expect(of(r, "RF-13")).toHaveLength(0);
+    expect(skipped(r, "RF-13")?.reason).toMatch(/tax backup/);
+    expect(r.checks_run).not.toContain("RF-13");
+  });
+});
+
 describe("engine policies", () => {
   it("downgrades quantified findings below materiality to info and marks them", () => {
     const r = scan(P([Y(2023, [L("CAM", 10_000), L("Taxes", 5_000, { section: "Taxes" }), L("Management fee", 450, { is_fee: true })])], LEASE_CAP));

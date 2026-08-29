@@ -5,7 +5,7 @@
     "tenant_name": "Lindquist Diagnostics",
     "premises_sf": 41000,
     "currency": "USD",
-    "schema_version": "1.0",
+    "schema_version": "1.1",
     "story": "Forged with the cap grown on the cap and a controllable cost moved out of the capped pool. Every other figure in the package ties."
   },
   "lease_lite": {
@@ -145,6 +145,18 @@
         "tenant_total": 202570.7,
         "estimates_paid": 195265.8,
         "balance_due": 7304.9
+      },
+      "tax_backup": {
+        "parcels": [
+          {
+            "parcel_id": "357-46-163",
+            "billed": 480636.43
+          },
+          {
+            "parcel_id": "291-39-427",
+            "billed": 442496.25
+          }
+        ]
       }
     },
     {
@@ -255,6 +267,18 @@
         "tenant_total": 209315.79,
         "estimates_paid": 202475.28,
         "balance_due": 6840.51
+      },
+      "tax_backup": {
+        "parcels": [
+          {
+            "parcel_id": "357-46-163",
+            "billed": 494217.33
+          },
+          {
+            "parcel_id": "291-39-427",
+            "billed": 454999.47
+          }
+        ]
       }
     },
     {
@@ -365,6 +389,18 @@
         "tenant_total": 242433.73,
         "estimates_paid": 196956,
         "balance_due": 45477.73
+      },
+      "tax_backup": {
+        "parcels": [
+          {
+            "parcel_id": "357-46-163",
+            "billed": 512206.36
+          },
+          {
+            "parcel_id": "291-39-427",
+            "billed": 471560.99
+          }
+        ]
       }
     }
   ]

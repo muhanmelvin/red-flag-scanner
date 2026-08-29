@@ -26,12 +26,16 @@
  *   was planted for. Moving a line out of the capped pool makes a category
  *   vanish and another appear; those are consequences, not surprises, and a
  *   test that forbade them would forbid the scheme.
- * - `document_only_findings` — schemes no check here can raise at all. The kept
- *   tax refund is the whole of that count: a refund the landlord received and
- *   did not credit is not a fact any reconciliation statement contains, so
- *   there is nothing on the page for a check to test. It is the standing
- *   argument for a future RF-13 that reads tax backup, and until that check
- *   exists this test pins the gap rather than papering over it.
+ * - `document_only_findings` — schemes no check here can raise at all. It reads
+ *   zero now, and the story of how it got there is the reason the field stays.
+ *   The kept tax refund used to be the whole of that count: a refund the
+ *   landlord received and never credited is not a fact any reconciliation
+ *   statement contains, so there was nothing on the page for a check to test.
+ *   This test pinned the gap instead of papering over it, and named the check
+ *   that would close it. Schema 1.1 gave the package somewhere to carry the
+ *   collector's account, RF-13 reads it, and the refund is an ordinary manifest
+ *   finding below. What the count pins now is that closure — and it stays in
+ *   the format, because it is how the *next* invisible scheme gets declared.
  */
 
 import { describe, expect, it } from "vitest";
@@ -91,7 +95,7 @@ const describeFindings = (findings: Finding[]) =>
 describe("the fixtures are the packages the manifests describe", () => {
   it.each(ALL.map((f) => [f.name, f] as const))("%s pairs a package with its own manifest", (_name, f) => {
     expect(f.pkg.meta.package_id).toBe(f.manifest.package_id);
-    expect(f.pkg.meta.schema_version).toBe("1.0");
+    expect(f.pkg.meta.schema_version).toBe("1.1");
     expect(f.pkg.years.length).toBeGreaterThanOrEqual(2);
   });
 });
@@ -110,7 +114,14 @@ describe("a clean forged package is invisible", () => {
   it("still runs the checks — an empty result is not an unrun one", () => {
     // A package that skipped every check would also raise nothing, which is the
     // one way this test could pass while proving nothing at all.
-    expect(result.checks_run.length).toBeGreaterThanOrEqual(10);
+    expect(result.checks_run.length).toBeGreaterThanOrEqual(11);
+  });
+
+  it("runs RF-13 rather than skipping it", () => {
+    // Foundry exports the tax backup for every package, clean ones included,
+    // precisely so that "clean" means invisible to RF-13 *running* — which is a
+    // stronger claim than invisible to RF-13 skipped for want of a document.
+    expect(result.checks_run).toContain("RF-13");
   });
 });
 
@@ -153,17 +164,36 @@ describe.each(SCHEMED.map((f) => [f.name, f] as const))("forged package %s", (_n
   });
 });
 
-describe("the gap the interchange is honest about", () => {
-  it("all-five plants a scheme no check here can raise", () => {
-    expect(fiveManifest.document_only_findings).toBeGreaterThanOrEqual(1);
+describe("the gap the interchange was honest about, and then closed", () => {
+  it("the catalog carries the check the gap argued for", () => {
+    expect(CHECK_CATALOG.map((c) => c.id)).toHaveLength(13);
+    expect(CHECK_CATALOG.map((c) => c.id)).toContain("RF-13");
   });
 
-  it("there is no check for it, and the catalog says so by ending at RF-12", () => {
-    // If a future RF-13 reads tax backup, this is the line that will fail, and
-    // failing is correct: the fixtures and Foundry's answer key both need to
-    // learn that the refund became visible.
-    expect(CHECK_CATALOG.map((c) => c.id)).toHaveLength(12);
-    expect(CHECK_CATALOG.map((c) => c.id).includes("RF-13")).toBe(false);
+  it("the kept refund is a manifest finding now, not a declared blind spot", () => {
+    expect(fiveManifest.findings.map((m) => m.check_id)).toContain("RF-13");
+  });
+
+  it("all-five plants nothing this engine cannot raise", () => {
+    expect(fiveManifest.document_only_findings).toBe(0);
+  });
+
+  it("but the count is still declared, because the next gap needs somewhere to be named", () => {
+    // Zero is a measurement, not a deleted field. A scheme the scanner cannot
+    // see is allowed to exist; being unable to *say so* in the manifest is not.
+    for (const f of ALL) expect(typeof f.manifest.document_only_findings).toBe("number");
+  });
+
+  it("RF-13 reads the backup and only the backup — a statement alone gets a skip", () => {
+    // The honesty moved rather than disappeared. Strip the tax backup and the
+    // same package goes back to being a reconciliation statement, on which the
+    // refund is not a fact any check can reach.
+    const stripped = JSON.parse(JSON.stringify(fivePackage)) as ReconPackage;
+    for (const y of stripped.years) delete y.tax_backup;
+    const r = scan(stripped);
+    expect(r.checks_run).not.toContain("RF-13");
+    expect(r.skipped.find((s) => s.check_id === "RF-13")?.reason).toMatch(/tax backup/);
+    expect(r.findings.some((x) => x.check_id === "RF-13")).toBe(false);
   });
 });
 

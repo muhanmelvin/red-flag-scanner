@@ -13,9 +13,10 @@ import { RF09 } from "./checks/rf09_capital.ts";
 import { RF10 } from "./checks/rf10_grossup.ts";
 import { RF11 } from "./checks/rf11_tieout.ts";
 import { RF12 } from "./checks/rf12_identical.ts";
+import { RF13 } from "./checks/rf13_taxbackup.ts";
 
 export const CHECKS: readonly Check[] = Object.freeze([
-  RF01, RF02, RF03, RF04, RF05, RF06, RF07, RF08, RF09, RF10, RF11, RF12,
+  RF01, RF02, RF03, RF04, RF05, RF06, RF07, RF08, RF09, RF10, RF11, RF12, RF13,
 ]);
 
 /** Catalog metadata for the UI and README: what each check implements. */
@@ -32,4 +33,5 @@ export const CHECK_CATALOG: ReadonlyArray<{ id: string; title: string; concept: 
   { id: "RF-10", title: "Gross-up sanity", concept: "Variable costs only, never beyond the target occupancy" },
   { id: "RF-11", title: "Arithmetic tie-out", concept: "Verify, don't assume" },
   { id: "RF-12", title: "Identical-amount test", concept: "The previous-year trap" },
+  { id: "RF-13", title: "Tax backup vs. statement", concept: "Taxes are net of refunds, abatements and credits" },
 ]);

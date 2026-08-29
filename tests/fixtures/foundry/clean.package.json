@@ -5,7 +5,7 @@
     "tenant_name": "Everly Supply Co.",
     "premises_sf": 29500,
     "currency": "USD",
-    "schema_version": "1.0",
+    "schema_version": "1.1",
     "story": "A clean package. Every document ties to the cent and there is nothing to find — which is what makes it worth scanning."
   },
   "lease_lite": {
@@ -151,6 +151,18 @@
         "tenant_total": 91098.39,
         "estimates_paid": 83844,
         "balance_due": 7254.39
+      },
+      "tax_backup": {
+        "parcels": [
+          {
+            "parcel_id": "200-76-773",
+            "billed": 154569.07
+          },
+          {
+            "parcel_id": "887-79-410",
+            "billed": 159376.67
+          }
+        ]
       }
     },
     {
@@ -267,6 +279,18 @@
         "tenant_total": 94069.42,
         "estimates_paid": 89183.64,
         "balance_due": 4885.78
+      },
+      "tax_backup": {
+        "parcels": [
+          {
+            "parcel_id": "200-76-773",
+            "billed": 162656.96
+          },
+          {
+            "parcel_id": "887-79-410",
+            "billed": 167716.12
+          }
+        ]
       }
     },
     {
@@ -383,6 +407,18 @@
         "tenant_total": 96750.82,
         "estimates_paid": 89702.28,
         "balance_due": 7048.54
+      },
+      "tax_backup": {
+        "parcels": [
+          {
+            "parcel_id": "200-76-773",
+            "billed": 169300.39
+          },
+          {
+            "parcel_id": "887-79-410",
+            "billed": 174566.2
+          }
+        ]
       }
     }
   ]

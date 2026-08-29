@@ -4,7 +4,7 @@ A deterministic, browser-only checklist that ranks red flags in a landlord's ope
 
 > The landlord prepares the statement, allocates the expenses, and holds all the records. This scanner runs the tenant-side checklist in your browser — **your file never leaves your machine.**
 
-**Live:** https://scanner.petriumalpha.com/ · **Single-file build:** `npm run build:single` → `dist-single/index.html` opens offline.
+**Live:** https://scanner.petriumalpha.com/ · **Single-file build:** `npm run build:single` → `dist-single/index.html` opens offline. · **[User guide](docs/user-guide.html)** — what each check asks, how to read a finding, and what the tool deliberately does not do.
 
 <!-- Demo GIF: record ~15s at ~800px wide — pick MW-B, read the summary band,
      expand the top finding, press Copy finding — save as docs/demo.gif, then
@@ -18,7 +18,7 @@ A deterministic, browser-only checklist that ranks red flags in a landlord's ope
 ## What it does in sixty seconds
 
 1. Pick one of three preloaded reconciliation packages — or upload your own XLSX/CSV.
-2. The engine runs twelve checks instantly (well under 50 ms) and shows a **ranked red-flag report**: each finding with a severity, an estimated dollar impact on the tenant, and a **Show the working** table.
+2. The engine runs thirteen checks instantly (well under 50 ms) and shows a **ranked red-flag report**: each finding with a severity, an estimated dollar impact on the tenant, and a **Show the working** table.
 3. Expand any finding and press **Copy finding** — the narrative and the arithmetic land on your clipboard, written in finding-letter register.
 4. A **Checks not run** footer lists every check that could not run and why. An auditor trusts a tool more when it says what it *didn't* test.
 
@@ -44,6 +44,9 @@ A language model can draft prose well and cannot be trusted to decide whether a 
 | RF-10 | Gross-up sanity | Variable costs only, never beyond the target occupancy; fixed costs grossed up | high / review |
 | RF-11 | Arithmetic tie-out | Subtotals, tenant allocation, balance due — verify, don't assume | high |
 | RF-12 | Identical-amount test | The previous-year trap: an amount repeated to the cent | review |
+| RF-13 | Tax backup vs. statement | Taxes are net of refunds, abatements and credits: the collector's levy less the credits granted, against the tax lines billed | high / review |
+
+RF-13 is the one check that reads a document rather than the statement. A reconciliation statement cannot say a refund exists, so RF-13 needs the `tax_backup` block a schema-1.1 ReconPackage carries (the levy as issued, and the credits against it) — and reports itself **not run** when the input is a workbook, or a JSON package without one. That is a limit of the input, stated rather than hidden.
 
 Severity policy: **high** = a lease-terms or arithmetic violation with a computable impact; **review** = a pattern that warrants a document request; **info** = context, or a quantified finding below the materiality threshold. Findings sort by severity, then impact. Three knobs are exposed in the page (materiality, swing threshold, round-number floor).
 
@@ -120,4 +123,4 @@ Two settings are not in the repo and have to be set once, in the repo's own sett
 
 ## Status
 
-v1.0 — all twelve checks, three packages, upload path, gates, CI. Built from the build plan in *Lease Audit Projects / Red Flag Scanner*. Synthetic data only; no client lease, statement or figure appears anywhere in this repository or its output, and two automated gates keep it that way.
+v1.0 — all thirteen checks, three packages, upload path, gates, CI. Built from the build plan in *Lease Audit Projects / Red Flag Scanner*. Synthetic data only; no client lease, statement or figure appears anywhere in this repository or its output, and two automated gates keep it that way.

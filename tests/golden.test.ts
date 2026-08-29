@@ -103,6 +103,17 @@ describe.each(manifests)("golden package $package_id", (manifest) => {
   });
 });
 
+describe("the shipped packages are statements, and RF-13 says so", () => {
+  // The Maplewood three are reconciliation statements with no collector's
+  // account behind them. RF-13 has nothing to read, and the honest report of
+  // that is a skip in the not-run footer — never a silent pass on the taxes.
+  it.each(PACKAGES.map((p) => [p.meta.package_id, p] as const))("%s: RF-13 is skipped, not run", (_id, pkg) => {
+    const r = scan(pkg);
+    expect(r.checks_run).not.toContain("RF-13");
+    expect(r.skipped.find((s) => s.check_id === "RF-13")?.reason).toMatch(/tax backup/);
+  });
+});
+
 describe("MW-B planted impact lands in the believable band", () => {
   it("total estimated tenant impact is between $4,000 and $8,000", () => {
     const r = scan(packageById("MW-B")!);

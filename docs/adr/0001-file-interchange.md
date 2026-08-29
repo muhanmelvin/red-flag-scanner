@@ -50,7 +50,7 @@ schedules and hides drift instead of surfacing it.
 
 - Discoverability has to be paid for in the UI, since it cannot be paid for in
   code: the picker names Recon Foundry and links to it, and the upload panel
-  says a forged JSON package is the only input that exercises all twelve checks.
+  says a forged JSON package is the only input that exercises every check.
 - `schema/recon-package.schema.json` is duplicated, byte-for-byte, in every repo
   that speaks the format. `app-starter/INTERCHANGE.md` is the spec.
 - Drift between the copies is caught by fixtures, not by types:

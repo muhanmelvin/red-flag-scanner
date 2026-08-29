@@ -1,6 +1,6 @@
 {
   "package_id": "BFC2-2023-5",
-  "expected_high_min": 5,
+  "expected_high_min": 6,
   "ledger": {
     "2023": {
       "pool_actual": 104867.72,
@@ -133,6 +133,18 @@
       ],
       "materiality_sensitive": true,
       "note": "The move also shrinks the base next year's ceiling grows from, so it compounds."
+    },
+    {
+      "check_id": "RF-13",
+      "year": 2025,
+      "category": "Real estate taxes",
+      "severity": "high",
+      "expected_impact_range": [
+        246,
+        268
+      ],
+      "materiality_sensitive": true,
+      "note": "RF-13 sees this only through the tax backup the ReconPackage JSON carries. A workbook upload cannot: a reconciliation statement does not contain the fact that a refund exists."
     }
   ],
   "cofires": [
@@ -141,5 +153,5 @@
     "RF-03"
   ],
   "total_planted_tenant_impact": 14604.54,
-  "document_only_findings": 1
+  "document_only_findings": 0
 }

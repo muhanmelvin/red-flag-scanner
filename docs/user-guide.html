@@ -1,0 +1,183 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Recon Red-Flag Scanner — User Guide</title>
+<style>
+  @page { size: Letter; margin: 0.7in 0.85in 0.7in 0.85in; }
+  :root {
+    --ink: #1d2430; --muted: #5b6573; --rule: #d9dee6; --band: #f3f5f8;
+    --accent: #1f4e79; --high: #b3261e; --review: #9a6700; --info: #4b5563;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font: 10.5pt/1.5 "Segoe UI", "Helvetica Neue", Arial, sans-serif; color: var(--ink); }
+  h1, h2, h3 { font-weight: 650; line-height: 1.2; margin: 0; color: var(--accent); }
+  h1 { font-size: 24pt; letter-spacing: -0.01em; }
+  h2 { font-size: 14.5pt; margin: 22pt 0 8pt; padding-bottom: 4pt; border-bottom: 1.5pt solid var(--accent); break-after: avoid; }
+  h3 { font-size: 11.5pt; margin: 12pt 0 4pt; color: var(--ink); break-after: avoid; }
+  p { margin: 0 0 7pt; }
+  ul, ol { margin: 0 0 8pt 0; padding-left: 18pt; }
+  li { margin-bottom: 3pt; }
+  li > ul { margin-top: 3pt; }
+  code, kbd { font: 9.5pt/1 Consolas, "Courier New", monospace; background: var(--band); padding: 1pt 3pt; border-radius: 2pt; }
+  table { width: 100%; border-collapse: collapse; margin: 6pt 0 10pt; font-size: 9.6pt; }
+  th, td { text-align: left; vertical-align: top; padding: 5pt 7pt; border-bottom: 0.75pt solid var(--rule); }
+  th { background: var(--band); font-weight: 650; border-bottom: 1pt solid #b8c0cc; }
+  tr { break-inside: avoid; }
+  td:first-child { white-space: nowrap; }
+  .cover { border-bottom: 2pt solid var(--accent); padding-bottom: 14pt; margin-bottom: 14pt; }
+  .cover .kicker { text-transform: uppercase; letter-spacing: 0.12em; font-size: 8.5pt; color: var(--muted); margin-bottom: 6pt; }
+  .cover .sub { font-size: 12pt; color: var(--muted); margin-top: 8pt; max-width: 6.2in; }
+  .meta { font-size: 8.5pt; color: var(--muted); margin-top: 10pt; }
+  .quick { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10pt; margin: 12pt 0 6pt; }
+  .quick .step { background: var(--band); border-left: 3pt solid var(--accent); padding: 8pt 10pt; border-radius: 0 4pt 4pt 0; }
+  .quick .n { font-weight: 700; color: var(--accent); font-size: 9pt; text-transform: uppercase; letter-spacing: 0.08em; }
+  .callout { background: var(--band); border-left: 3pt solid var(--accent); padding: 7pt 10pt; margin: 8pt 0 10pt; border-radius: 0 4pt 4pt 0; break-inside: avoid; }
+  .callout.tip { border-left-color: #2e7d32; }
+  .callout b:first-child { color: var(--accent); }
+  .callout.tip b:first-child { color: #2e7d32; }
+  .sev { display: inline-block; font-weight: 700; font-size: 9pt; padding: 0 5pt; border-radius: 3pt; border: 1pt solid; margin-right: 3pt; white-space: nowrap; }
+  .sev.high { color: var(--high); border-color: var(--high); }
+  .sev.review { color: var(--review); border-color: var(--review); }
+  .sev.info { color: var(--info); border-color: var(--info); }
+  .toc { columns: 2; column-gap: 24pt; font-size: 9.8pt; margin: 6pt 0 4pt; }
+  .toc div { break-inside: avoid; padding: 1.5pt 0; }
+  .toc span { color: var(--accent); font-weight: 650; display: inline-block; width: 16pt; }
+  .muted { color: var(--muted); }
+  .pagebreak { break-before: page; }
+  .footer-note { margin-top: 18pt; padding-top: 8pt; border-top: 0.75pt solid var(--rule); font-size: 8.5pt; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="kicker">Recon Red-Flag Scanner · v1.0</div>
+  <h1>User Guide</h1>
+  <div class="sub">Run the tenant-side checklist on a landlord's operating-expense reconciliation and get back a ranked list of red flags — each with its arithmetic and a finding-letter sentence. Everything runs in your browser; nothing you load is sent anywhere.</div>
+  <div class="meta">Synthetic demo data only (Maplewood Commerce Center). No login, no server, no AI in the numbers.</div>
+</div>
+
+<h3 style="margin-top:0">In sixty seconds</h3>
+<div class="quick">
+  <div class="step"><div class="n">1 · Open</div>The page lands on package <b>MW-B</b>, already scanned.</div>
+  <div class="step"><div class="n">2 · Read</div>Summary band: estimated impact, High / Review / Info counts, checks run.</div>
+  <div class="step"><div class="n">3 · Expand</div>Click any finding for the narrative, the working, and <b>Copy finding</b>.</div>
+</div>
+
+<h3>Contents</h3>
+<div class="toc">
+  <div><span>1</span>Open it</div>
+  <div><span>2</span>Pick a package</div>
+  <div><span>3</span>Read the summary band</div>
+  <div><span>4</span>Work the findings</div>
+  <div><span>5</span>Scan settings</div>
+  <div><span>6</span>Upload your own statement</div>
+  <div><span>7</span>The thirteen checks at a glance</div>
+  <div><span>8</span>What the scanner deliberately does not do</div>
+</div>
+
+<h2>1. Open it</h2>
+<ul>
+  <li><b>Local:</b> run <code>npm run dev</code> in the repo and open <code>http://localhost:5173</code> — or open <code>dist-single/index.html</code> after <code>npm run build:single</code> (works offline, no server).</li>
+  <li><b>Hosted:</b> the Cloudflare / GitHub Pages URL once deployed, or the quick-share artifact link.</li>
+</ul>
+<p>The page lands on <b>MW-B</b> already scanned. There is nothing to set up and nothing to sign in to.</p>
+
+<h2>2. Pick a package</h2>
+<p>Four cards sit at the top of the page. Click one and the scan runs instantly; the URL hash (for example <code>#MW-B</code>) is shareable.</p>
+<table>
+  <tr><th>Card</th><th>What it is</th><th>Why look at it</th></tr>
+  <tr><td><b>MW-B</b> · Halverson Sporting Goods</td><td>Three years under a 5% cap on controllables</td><td>The showpiece: cap billed as an escalator, fee on the wrong base, a security line that slips out of the capped pool</td></tr>
+  <tr><td><b>MW-C</b> · Copperline Outfitters</td><td>Two years; occupancy falls 98% → 82%</td><td>Capital expensed as repairs, insurance grossed up, denominator shrinks, balance mis-added</td></tr>
+  <tr><td><b>MW-A</b> · Tessaro Home Goods</td><td>Two clean years</td><td>Proves the scanner doesn't cry wolf — exactly one "review", zero "high"</td></tr>
+  <tr><td><b>Upload your own</b></td><td>Your XLSX / CSV / JSON</td><td>See section 6</td></tr>
+</table>
+<p class="muted">All three packages are synthetic — tenants of the fictional Maplewood Commerce Center.</p>
+
+<h2>3. Read the summary band</h2>
+<ul>
+  <li><b>Estimated tenant impact</b> — the sum of every <i>quantified</i> overcharge (the "est. impact" figures). Labelled <i>estimated</i> on purpose: it is what the checks can price, not a settlement number.</li>
+  <li><b>High / Review / Info</b> — counts by severity:
+    <ul>
+      <li><span class="sev high">▲ High</span> a lease-terms or arithmetic violation the engine can price.</li>
+      <li><span class="sev review">● Review</span> a pattern that warrants a document request (a swing, a vanished line, an identical amount). These carry an <i>"at stake"</i> figure, not an impact, and are never summed.</li>
+      <li><span class="sev info">○ Info</span> context, or a priced finding that fell below your materiality threshold.</li>
+    </ul>
+  </li>
+  <li><b>Checks run</b> — how many of the 12 checks could run on this package. The ones that couldn't are listed under the findings with the reason (e.g. "no cap in the lease").</li>
+  <li><b>Shape of the report</b> — one bar per check, RF-01 … RF-12, segmented by severity. A glance tells you whether this is a cap story, a fee story or an allocation story. <i>n/a</i> means the check did not run.</li>
+</ul>
+
+<h2>4. Work the findings</h2>
+<p>Findings are ranked: High first, then by dollar impact. Each card shows severity, check ID, year(s), the line concerned, and the dollar figure. Click a card (or press <kbd>Enter</kbd> on it) to expand:</p>
+<ol>
+  <li><b>Narrative</b> — two or three sentences in finding-letter register: what the statement did, what the lease says, what Tenant requests.</li>
+  <li><b>Show the working</b> — the arithmetic line by line (base, rate, ceiling, billed, excess, tenant share, impact). For cap findings the full multi-year schedule follows.</li>
+  <li><b>Implements</b> — which audit concept the check encodes (e.g. <i>Burke, Cap Traps: cap-on-cap</i>).</li>
+  <li><b>Read with</b> — links to related findings (a vanished line ↔ the new line ↔ the migration that explains both).</li>
+  <li><b>Copy finding</b> — copies narrative + working as plain text, ready to paste into a letter or workpaper.</li>
+</ol>
+<div class="callout tip"><b>Try this.</b> On MW-B, open the top RF-06 finding and read the "Landlord's stated cap" row — the engine names <i>how</i> the landlord got its number (prior year's billing grown 5%).</div>
+
+<h2>5. Scan settings</h2>
+<p><b>Scan settings</b> (top right of the Findings zone) opens three knobs; the scan re-runs as you change them.</p>
+<table>
+  <tr><th>Setting</th><th>Default</th><th>Effect</th></tr>
+  <tr><td>Materiality (tenant $)</td><td>250</td><td>Priced findings below this drop to Info; swings below it are not raised</td></tr>
+  <tr><td>Year-over-year swing %</td><td>15</td><td>Threshold for RF-01 and for the "swung" escalation in RF-05</td></tr>
+  <tr><td>Round-number floor ($)</td><td>5,000</td><td>Only pool amounts at or above this are tested for round figures</td></tr>
+</table>
+<div class="callout tip"><b>Try this.</b> Raise materiality to 400 on MW-B: the RF-04 migration finding ($357.56) drops to Info — a live demonstration of why materiality is a tenant decision, not a default.</div>
+
+<h2>6. Upload your own statement</h2>
+<ol>
+  <li>Click <b>Upload your own</b>. Drop an <code>.xlsx</code>, <code>.xls</code> or <code>.csv</code>, or choose a file. (A <code>.json</code> package in the canonical schema skips straight to the scan.)</li>
+  <li><b>Step 1 — Confirm the columns.</b> The page detects the header row and guesses each column's role: <i>Label</i>, <i>Section</i>, <i>Bucket</i>, or <i>Amount for year ____</i>. Fix anything it guessed wrong; give every amount column its year.</li>
+  <li><b>Step 2 — Confirm the lines.</b> A preview table lists every expense line with its section, bucket (controllable / non-controllable / unknown) and a <i>Fee?</i> flag. Rows with a label but no amount are treated as section headers; rows labelled <i>Total</i> / <i>Subtotal</i> are skipped.</li>
+  <li><b>Step 3 — Lease terms.</b> Premises sf, the landlord's denominator, billed share %, the lease's stated share % if any; tick <i>cap</i> / <i>fee</i> / <i>gross-up</i> and fill in the few fields each needs. Blank means "not stated" — the corresponding checks report themselves as not run rather than guessing.</li>
+  <li><b>Scan this statement.</b> The result appears as a new card; adjust a bucket or a lease term and scan again.</li>
+</ol>
+<div class="callout"><b>Best input shape.</b> One label column and one amount column per year, headed by the year (download the template from the upload panel). Money strings like <code>$1,234.56</code> and <code>(1,250.00)</code> are understood.</div>
+<div class="callout"><b>Privacy.</b> The page ships a Content-Security-Policy that forbids any network connection, so the file physically cannot leave the browser.</div>
+
+<h3>Test-drive it with a synthetic package from Recon Foundry</h3>
+<p>If the file you want to try is a client's and cannot leave the office, forge one instead. <a href="https://foundry.petriumalpha.com/">Recon Foundry</a> is the sibling app in this family: give it a seed and it forges a whole reconciliation package for an invented property &mdash; workbook, general ledger, billing statement, tax and insurance backup, amortization schedule, tenant ledger and the lease &mdash; where every figure ties to the cent except exactly where you told it to cheat.</p>
+<ol>
+  <li>In Recon Foundry, tick the schemes you want planted and press <b>Download for the Scanner (.json)</b>.</li>
+  <li>Come back here, open <b>Upload your own</b>, and drop that file on it. There is no mapping step: the file is already in the shape this engine reads, so it goes straight to the scan.</li>
+  <li>The package keeps its own name, property and tenant on the card, and the answer key over there says what should have been found.</li>
+</ol>
+<div class="callout"><b>The JSON path sees more than a workbook can show.</b> An XLSX or CSV upload carries expense lines and little else: the landlord's own cap computation, a line's capital block, whether a gross-up was applied, the statement's subtotals and the tax backup are not columns in a spreadsheet. So <b>RF-11</b> reports itself as <i>not run</i> &mdash; there are no subtotals or tenant amounts to recompute &mdash; <b>RF-13</b> reports itself as not run for want of a tax backup, and <b>RF-10</b> only runs where the statement says a gross-up was applied. <b>RF-06</b> and <b>RF-09</b> still run, but see less: the ceiling can be rebuilt from the lease with nothing stated to compare it against, and a lump that looks capital can be flagged without the amortization arithmetic being reproducible. On one forged package the difference was 12 checks run, 11 findings and $14,152 through the JSON, against 10 checks, 7 findings and $11,752 through what a workbook can carry. It is a limit of the input, not of the checks.</div>
+<div class="callout"><b>One planted scheme is findable only through the paper.</b> Recon Foundry can plant a kept tax refund &mdash; the landlord wins an assessment appeal, receives the money and never credits it to the reconciliation. <b>RF-13</b> finds it, but only because a ReconPackage JSON can carry the collector's account: the levy as issued and the credits granted against it. Upload the same package as a workbook and the scheme is invisible, because a reconciliation statement does not contain the fact that a refund exists. Worth knowing before you conclude a package is clean because this page said so &mdash; check the <b>Checks not run</b> footer for RF-13.</div>
+
+<h2>7. The thirteen checks at a glance</h2>
+<table>
+  <tr><th>ID</th><th>Name</th><th>What it asks</th></tr>
+  <tr><td>RF-01</td><td>Year-over-year variance</td><td>Did a line move ≥ threshold, and is the tenant-level change material?</td></tr>
+  <tr><td>RF-02</td><td>New category</td><td>What appeared this year that wasn't there last year? (High if it's a fee, or a non-controllable line under a cap)</td></tr>
+  <tr><td>RF-03</td><td>Category vanished</td><td>What disappeared — and did something of similar size appear elsewhere?</td></tr>
+  <tr><td>RF-04</td><td>Migration</td><td>Did a line change bucket/section, and does the move let cost escape the cap?</td></tr>
+  <tr><td>RF-05</td><td>Round numbers</td><td>Is a pool figure suspiciously round?</td></tr>
+  <tr><td>RF-06</td><td>Cap compliance</td><td>Rebuild the ceiling from the lease; was the pool billed above the lesser of actual and cap? Is billing growing exactly +X% a year?</td></tr>
+  <tr><td>RF-07</td><td>Fees</td><td>Does the fee reproduce as rate × permitted base? Fee on fee? Stacked fees? Fee outside the cap when the lease puts it inside?</td></tr>
+  <tr><td>RF-08</td><td>Pro-rata share</td><td>Billed share vs stated; vs numerator ÷ denominator; shrinking denominator; pool × share vs tenant total</td></tr>
+  <tr><td>RF-09</td><td>Capital &amp; amortization</td><td>Does the installment reproduce from cost ÷ months × months in service? Still billed after end of life? Lumps that should amortize?</td></tr>
+  <tr><td>RF-10</td><td>Gross-up</td><td>Fixed costs grossed up? Variable costs grossed beyond the target occupancy?</td></tr>
+  <tr><td>RF-11</td><td>Arithmetic tie-out</td><td>Do the landlord's subtotals, tenant lines and balance due add?</td></tr>
+  <tr><td>RF-12</td><td>Identical amounts</td><td>Same amount to the cent two years running?</td></tr>
+  <tr><td>RF-13</td><td>Tax backup vs. statement</td><td>Does the tax line exceed the collector's levy net of the credits granted? (Needs the tax backup &mdash; not run without it)</td></tr>
+</table>
+
+<h2>8. What the scanner deliberately does not do</h2>
+<ul>
+  <li><b>It does not guess.</b> If the lease term or statement field a check needs is missing, the check reports itself as <i>not run</i> with the reason.</li>
+  <li><b>It does not use AI for any number.</b> Every figure comes from a deterministic engine; same input, same output.</li>
+  <li><b>It does not settle.</b> "Estimated tenant impact" is what the checks can price; overlapping findings (e.g. a fee inside a pool that is also over its cap) are each priced on their own premise.</li>
+  <li><b>It never sends data anywhere.</b> There is no server to send it to.</li>
+</ul>
+
+<div class="footer-note">Recon Red-Flag Scanner · User Guide · all examples use synthetic Maplewood Commerce Center data.</div>
+
+</body>
+</html>

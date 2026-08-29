@@ -5,7 +5,7 @@
     "tenant_name": "Rothwell Trading Co.",
     "premises_sf": 12600,
     "currency": "USD",
-    "schema_version": "1.0",
+    "schema_version": "1.1",
     "story": "Forged with capital expensed in a lump, the cap grown on the cap, a fee on a base the lease does not permit, a controllable cost moved out of the capped pool and a tax refund kept. Every other figure in the package ties."
   },
   "lease_lite": {
@@ -145,6 +145,18 @@
         "tenant_total": 23809.02,
         "estimates_paid": 22481.88,
         "balance_due": 1327.14
+      },
+      "tax_backup": {
+        "parcels": [
+          {
+            "parcel_id": "396-78-139",
+            "billed": 48620.27
+          },
+          {
+            "parcel_id": "350-55-705",
+            "billed": 79249.97
+          }
+        ]
       }
     },
     {
@@ -255,6 +267,18 @@
         "tenant_total": 24502.3,
         "estimates_paid": 23424,
         "balance_due": 1078.3
+      },
+      "tax_backup": {
+        "parcels": [
+          {
+            "parcel_id": "396-78-139",
+            "billed": 50056.31
+          },
+          {
+            "parcel_id": "350-55-705",
+            "billed": 81590.69
+          }
+        ]
       }
     },
     {
@@ -371,6 +395,26 @@
         "tenant_total": 39045.86,
         "estimates_paid": 22599.24,
         "balance_due": 16446.62
+      },
+      "tax_backup": {
+        "parcels": [
+          {
+            "parcel_id": "396-78-139",
+            "billed": 52163.97,
+            "credits": [
+              {
+                "amount": 3531.89,
+                "appeal_year": 2024,
+                "granted": "2025-09-09",
+                "reference": "AP-2024-7448"
+              }
+            ]
+          },
+          {
+            "parcel_id": "350-55-705",
+            "billed": 85026.12
+          }
+        ]
       }
     }
   ]

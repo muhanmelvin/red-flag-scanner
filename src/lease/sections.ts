@@ -99,6 +99,10 @@ export const CLAUSE_FOR_CHECK: Readonly<Record<string, readonly string[]>> = Obj
   "RF-10": ["6.05"],
   "RF-11": ["6.06"],
   "RF-12": ["6.07"],
+  // What an operating expense *is* — taxes net of the refunds and abatements
+  // the collector granted — plus the right that lets Tenant ask for the backup
+  // that shows them.
+  "RF-13": ["6.01", "6.07"],
 });
 
 /** DOM id for a section anchor: 6.02 → sec-6-02. */
