@@ -1,0 +1,7 @@
+# red-flag-scanner
+
+## From the Lease Audit Projects folder map
+
+Moved here from `Lease Audit Projects\CLAUDE.md` on 2026-09-07; the one-line index entry there points to this section.
+
+the Recon Red-Flag Scanner repo (built from `Red Flag Scanner\red-flag-scanner-build-plan.md`; v1.0 complete). **Live at https://scanner.petriumalpha.com (cutover 2026-08-26; source at https://github.com/muhanmelvin/red-flag-scanner, deployed to GitHub Pages by `.github/workflows/ci.yml`). The old `muhanmelvin.github.io/red-flag-scanner/` path no longer works — `BASE_PATH` is dropped, so the two URLs cannot both serve. `index.html` carries the cross-app site-nav block; keep it identical to `app-starter\index.html`. One item still open: record `docs/demo.gif` and uncomment `README.md:9`. See `melvin_sandbox\RESUME.md`.** **Same zero-client-data rule as recon-forensics**: the private deny-list lives in git-ignored `gates/denylist.local.json` (copy of the Cap Trap Explorer FORBIDDEN list) / the `CLIENT_DENYLIST` CI secret; `npm run build` runs `scripts/build-gate.mjs` which deletes `dist/` on a hit. `npm run build:single` → one offline HTML (CSP hashes added by `scripts/finalize-single.mjs`); `node tools/make-artifact.mjs` makes the artifact-shaped page. Quick-share artifact (not the employer-facing URL — that is the public repo and its Pages deploy): https://claude.ai/code/artifact/f4c5b8db-1e37-40d7-8040-d246b5b90016
