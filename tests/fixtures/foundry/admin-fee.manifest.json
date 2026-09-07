@@ -1,0 +1,113 @@
+{
+  "package_id": "WP7-2023-2",
+  "expected_high_min": 3,
+  "ledger": {
+    "2023": {
+      "pool_actual": 276977.9,
+      "allowed_correct": 280531.14,
+      "paid_correct": 276977.9,
+      "billed": 276977.9,
+      "ll_allowed": 280531.14,
+      "fee_billed": 27773.64,
+      "fee_correct": 13469.86,
+      "tax_billed": 360910.91,
+      "tax_correct": 360910.91,
+      "capital_billed": 39122.07,
+      "capital_correct": 39122.07,
+      "tenant_billed": 111528.83,
+      "tenant_correct": 107823.71,
+      "tenant_excess": 3705.12
+    },
+    "2024": {
+      "pool_actual": 280955.79,
+      "allowed_correct": 288057.02,
+      "paid_correct": 280955.79,
+      "billed": 280955.79,
+      "ll_allowed": 288057.02,
+      "fee_billed": 28516.1,
+      "fee_correct": 13749.13,
+      "tax_billed": 372818.05,
+      "tax_correct": 372818.05,
+      "capital_billed": 37610.1,
+      "capital_correct": 37610.1,
+      "tenant_billed": 114239.64,
+      "tenant_correct": 110360.86,
+      "tenant_excess": 3878.78
+    },
+    "2025": {
+      "pool_actual": 285114.46,
+      "allowed_correct": 292194.02,
+      "paid_correct": 285114.46,
+      "billed": 285114.46,
+      "ll_allowed": 292194.02,
+      "fee_billed": 29500.17,
+      "fee_correct": 14060.37,
+      "tax_billed": 389486.66,
+      "tax_correct": 389486.66,
+      "capital_billed": 36098.14,
+      "capital_correct": 36098.14,
+      "tenant_billed": 117268.3,
+      "tenant_correct": 113780.35,
+      "tenant_excess": 3487.95
+    }
+  },
+  "findings": [
+    {
+      "check_id": "RF-07",
+      "year": 2023,
+      "category": "Management fee (3.6%)",
+      "severity": "high",
+      "expected_impact_range": [
+        1619,
+        1756
+      ],
+      "note": "Permitted base 374162.78; base actually used 771490.08."
+    },
+    {
+      "check_id": "RF-07",
+      "year": 2024,
+      "category": "Management fee (3.6%)",
+      "severity": "high",
+      "expected_impact_range": [
+        1684,
+        1827
+      ],
+      "note": "Permitted base 381920.23; base actually used 792113.84."
+    },
+    {
+      "check_id": "RF-07",
+      "year": 2025,
+      "category": "Management fee (3.6%)",
+      "severity": "high",
+      "expected_impact_range": [
+        1776,
+        1926
+      ],
+      "note": "Permitted base 390565.75; base actually used 819449.23."
+    },
+    {
+      "check_id": "RF-07",
+      "year": 2023,
+      "category": "Management fee (3.6%) + Administrative fee",
+      "severity": "review",
+      "note": "Administrative fee 14013.88, being 3.39% of Common Area Maintenance costs of 413284.85; tenant share 1833.59. The scanner reports the pair as an exposure rather than a priced overcharge, because a statement cannot say what the second line bought."
+    },
+    {
+      "check_id": "RF-07",
+      "year": 2024,
+      "category": "Management fee (3.6%) + Administrative fee",
+      "severity": "review",
+      "note": "Administrative fee 14878.00, being 3.55% of Common Area Maintenance costs of 419530.33; tenant share 1946.65. The scanner reports the pair as an exposure rather than a priced overcharge, because a statement cannot say what the second line bought."
+    },
+    {
+      "check_id": "RF-07",
+      "year": 2025,
+      "category": "Management fee (3.6%) + Administrative fee",
+      "severity": "review",
+      "note": "Administrative fee 11218.14, being 2.63% of Common Area Maintenance costs of 426663.89; tenant share 1467.79. The scanner reports the pair as an exposure rather than a priced overcharge, because a statement cannot say what the second line bought."
+    }
+  ],
+  "cofires": [],
+  "total_planted_tenant_impact": 11071.85,
+  "document_only_findings": 0
+}

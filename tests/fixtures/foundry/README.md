@@ -24,9 +24,11 @@ the fixtures to turn the test green answers neither.
 | `clean` | ABP3-2023-clean | `fixture-clean-1` | none | 0 | 0 |
 | `cap-migration` | NCC8-2022-2 | `fixture-cap-1` | above_cap_billing, bucket_migration | 4 | 0 |
 | `all-five` | BFC2-2023-5 | `fixture-five-1` | unamortized_capital, above_cap_billing, fee_base_expansion, bucket_migration, kept_tax_refund | 8 | 0 |
+| `admin-fee` | WP7-2023-2 | `fixture-admin-1` | fee_base_expansion, admin_fee_stacking | 6 | 0 |
 | `budget-tax` | CP8-2023-1 | `fixture-budget-1` | budget_tax_billing | 3 | 0 |
 
 - **clean** — Nothing planted. The scanner must find nothing of any severity.
 - **cap-migration** — The cap grown on the cap, and a controllable cost moved out of the capped pool.
 - **all-five** — Every scheme at once, kept tax refund included — which RF-13 now raises off the tax backup.
+- **admin-fee** — A management fee at the rate the lease states and an administrative fee beside it, with the base widened under both — RF-07 from two directions at once.
 - **budget-tax** — Real estate taxes billed at the landlord's budget and never trued up to the county's bill — RF-13 from the other direction.

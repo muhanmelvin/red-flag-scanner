@@ -51,6 +51,8 @@ import fivePackage from "./fixtures/foundry/all-five.package.json";
 import fiveManifest from "./fixtures/foundry/all-five.manifest.json";
 import budgetPackage from "./fixtures/foundry/budget-tax.package.json";
 import budgetManifest from "./fixtures/foundry/budget-tax.manifest.json";
+import adminPackage from "./fixtures/foundry/admin-fee.package.json";
+import adminManifest from "./fixtures/foundry/admin-fee.manifest.json";
 
 interface ManifestFinding {
   check_id: string;
@@ -89,6 +91,12 @@ const SCHEMED = [
   // backup carried a credit the statement ignored, here the backup simply says
   // a smaller number than the statement bills, every year of the term.
   fixture(budgetPackage, budgetManifest, "budget-tax"),
+  // Both halves of RF-07 at once: a fee on a base the lease does not permit,
+  // which the per-line test prices, and an administrative fee beside the
+  // management fee, which the duplication test reports as an exposure. The
+  // second has no expected impact range in the manifest, because the check
+  // states none — a statement cannot say what the second line bought.
+  fixture(adminPackage, adminManifest, "admin-fee"),
 ];
 const ALL = [CLEAN, ...SCHEMED];
 
