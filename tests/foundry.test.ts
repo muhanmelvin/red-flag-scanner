@@ -49,6 +49,8 @@ import capPackage from "./fixtures/foundry/cap-migration.package.json";
 import capManifest from "./fixtures/foundry/cap-migration.manifest.json";
 import fivePackage from "./fixtures/foundry/all-five.package.json";
 import fiveManifest from "./fixtures/foundry/all-five.manifest.json";
+import budgetPackage from "./fixtures/foundry/budget-tax.package.json";
+import budgetManifest from "./fixtures/foundry/budget-tax.manifest.json";
 
 interface ManifestFinding {
   check_id: string;
@@ -79,7 +81,15 @@ const fixture = (pkg: unknown, manifest: unknown, name: string) => ({
 });
 
 const CLEAN = fixture(cleanPackage, cleanManifest, "clean");
-const SCHEMED = [fixture(capPackage, capManifest, "cap-migration"), fixture(fivePackage, fiveManifest, "all-five")];
+const SCHEMED = [
+  fixture(capPackage, capManifest, "cap-migration"),
+  fixture(fivePackage, fiveManifest, "all-five"),
+  // Taxes billed at a budget the landlord never trued up to the county's bill.
+  // RF-13 reaches it from the opposite side to the kept refund: there the
+  // backup carried a credit the statement ignored, here the backup simply says
+  // a smaller number than the statement bills, every year of the term.
+  fixture(budgetPackage, budgetManifest, "budget-tax"),
+];
 const ALL = [CLEAN, ...SCHEMED];
 
 const sameYear = (a: Finding["year"], b: ManifestFinding["year"]) =>
@@ -158,9 +168,15 @@ describe.each(SCHEMED.map((f) => [f.name, f] as const))("forged package %s", (_n
 
   it("prices something, and less than the whole truth", () => {
     // The manifest's total is what the schemes are worth to the tenant; the
-    // scan's total is what these checks can see of it. Under, never over.
+    // scan's total is what these checks can see of it. Under, never over —
+    // within the dollar this engine allows itself everywhere else on a package
+    // it did not author. The two sides take the tenant's share at different
+    // moments: the manifest rounds the billed and the correct figures and then
+    // subtracts, this engine subtracts and then rounds. On a scheme whose whole
+    // impact is one line's difference that is worth a cent a year, in either
+    // direction, and neither arithmetic is the wrong one.
     expect(result.totals.estimated_impact_usd).toBeGreaterThan(0);
-    expect(result.totals.estimated_impact_usd).toBeLessThanOrEqual(f.manifest.total_planted_tenant_impact);
+    expect(result.totals.estimated_impact_usd).toBeLessThanOrEqual(f.manifest.total_planted_tenant_impact + 1);
   });
 });
 

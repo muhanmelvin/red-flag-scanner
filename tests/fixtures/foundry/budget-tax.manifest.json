@@ -1,0 +1,92 @@
+{
+  "package_id": "CP8-2023-1",
+  "expected_high_min": 0,
+  "ledger": {
+    "2023": {
+      "pool_actual": 182785.61,
+      "allowed_correct": 186178.46,
+      "paid_correct": 182785.61,
+      "billed": 182785.61,
+      "ll_allowed": 186178.46,
+      "fee_billed": 10086,
+      "fee_correct": 10086,
+      "tax_billed": 283465.04,
+      "tax_correct": 257880.11,
+      "capital_billed": 31024.54,
+      "capital_correct": 31024.54,
+      "tenant_billed": 34769.3,
+      "tenant_correct": 33276.86,
+      "tenant_excess": 1492.44
+    },
+    "2024": {
+      "pool_actual": 187877.62,
+      "allowed_correct": 191924.89,
+      "paid_correct": 187877.62,
+      "billed": 187877.62,
+      "ll_allowed": 191924.89,
+      "fee_billed": 10327.35,
+      "fee_correct": 10327.35,
+      "tax_billed": 299576.81,
+      "tax_correct": 273852.97,
+      "capital_billed": 29924.7,
+      "capital_correct": 29924.7,
+      "tenant_billed": 36072.16,
+      "tenant_correct": 34571.61,
+      "tenant_excess": 1500.55
+    },
+    "2025": {
+      "pool_actual": 190268.41,
+      "allowed_correct": 197271.5,
+      "paid_correct": 190268.41,
+      "billed": 190268.41,
+      "ll_allowed": 197271.5,
+      "fee_billed": 10523.9,
+      "fee_correct": 10523.9,
+      "tax_billed": 304490.68,
+      "tax_correct": 286972.43,
+      "capital_billed": 28824.87,
+      "capital_correct": 28824.87,
+      "tenant_billed": 36683.95,
+      "tenant_correct": 35662.06,
+      "tenant_excess": 1021.89
+    }
+  },
+  "findings": [
+    {
+      "check_id": "RF-13",
+      "year": 2023,
+      "category": "Real estate taxes",
+      "severity": "review",
+      "expected_impact_range": [
+        1432,
+        1554
+      ],
+      "note": "Budget billed 283465.04; county levied 257880.11; tenant share of the difference 1492.45."
+    },
+    {
+      "check_id": "RF-13",
+      "year": 2024,
+      "category": "Real estate taxes",
+      "severity": "review",
+      "expected_impact_range": [
+        1440,
+        1562
+      ],
+      "note": "Budget billed 299576.81; county levied 273852.97; tenant share of the difference 1500.55."
+    },
+    {
+      "check_id": "RF-13",
+      "year": 2025,
+      "category": "Real estate taxes",
+      "severity": "review",
+      "expected_impact_range": [
+        981,
+        1064
+      ],
+      "note": "Budget billed 304490.68; county levied 286972.43; tenant share of the difference 1021.89."
+    }
+  ],
+  "cofires": [],
+  "total_planted_tenant_impact": 4014.88,
+  "document_only_findings": 0
+}
