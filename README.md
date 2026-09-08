@@ -124,3 +124,7 @@ Two settings are not in the repo and have to be set once, in the repo's own sett
 ## Status
 
 v1.0 — all thirteen checks, three packages, upload path, gates, CI. Built from the build plan in *Lease Audit Projects / Red Flag Scanner*. Synthetic data only; no client lease, statement or figure appears anywhere in this repository or its output, and two automated gates keep it that way.
+
+## Licence
+
+MIT — see [LICENSE](LICENSE).
